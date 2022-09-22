@@ -7,7 +7,7 @@ interface IContainer{
 export const Container = styled.div<IContainer>`
     padding: 0 15px;
     height: 100%;
-    flex: 0 0 320px;
+    flex: 0 0 280px;
     opacity:${props=>props.done?0.6:1};
 
     & + div{

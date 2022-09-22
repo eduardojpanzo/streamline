@@ -9,4 +9,24 @@ export const Container = styled.div`
 
     display: flex;
     align-items: center;
+    justify-content: space-between;
+
+    .rightSide{
+        display: flex;
+        align-items: center;
+        gap:20px;
+    }
+    .acessButton{
+        display: flex;
+        gap:10px;
+    }
+    .timeDate{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
+        p{
+            font-size:1.3rem;
+        }
+    }
 `;
