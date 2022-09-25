@@ -6,6 +6,4 @@ const usersRepository = new UsersRepository();
 
 const findUserFromEmailUseCase = new FindUserFromEmailUseCase(usersRepository);
 
-const findUserFromEmailController = new FindUserFromEmailController(findUserFromEmailUseCase)
-
-export {findUserFromEmailController}
+export const findUserFromEmailController = new FindUserFromEmailController(findUserFromEmailUseCase)

@@ -6,6 +6,4 @@ const projectsRepository = new ProjectsRepository();
 
 const findProjectFromNameUseCase = new FindProjectFromNameUseCase(projectsRepository);
 
-const findProjectFromNameController = new FindProjectFromNameController(findProjectFromNameUseCase)
-
-export {findProjectFromNameController}
+export const findProjectFromNameController = new FindProjectFromNameController(findProjectFromNameUseCase)

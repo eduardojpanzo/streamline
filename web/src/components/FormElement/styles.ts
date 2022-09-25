@@ -168,3 +168,51 @@ export const SignUpContainer = styled.form`
         }
     }
 `
+
+export const FormControlStyled = styled.label`
+        display: block;
+        width: 100%;
+        height: 40px;
+        margin-bottom: 20px;
+        position: relative;
+        background-color: #ccc;
+
+        input{
+            display: block;
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+            border: none;
+            border: 1px solid #e0e0e0;
+            transition-duration: 0.3s;
+
+            &:focus{
+                outline: none;
+                transition-duration: 0.3s;
+                border-bottom: 2px solid var(--gray-700);
+            }
+
+        }
+
+        span{
+            display: block;
+            padding: 0px 5px; 
+            margin: 5px 0px 0px 5px; 
+            background: #fff;
+            position: absolute;
+            top: -15px;
+            font-size: 0.89rem;  
+            color: var(--gray-700);
+            transition-duration: 0.3s;
+    }
+`
+
+export const Button = styled.button`
+    display: block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background: var(--violet-500);
+    color: #fff;
+    font-weight: 600;
+    transition-duration: 0.3s;
+`

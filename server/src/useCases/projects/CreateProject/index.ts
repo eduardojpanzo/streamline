@@ -1,12 +1,10 @@
 import { ProjectsRepository } from "../../../repositories/Implementations/ProjectsRepository";
-import { CreateProjectsController } from "./CreateUsersController";
-import { CreateProjectsUseCase } from "./CreateUsersUseCase";
+import { CreateProjectsController } from "./CreateProjectsController";
+import { CreateProjectsUseCase } from "./CreateProjectsUseCase";
 
 
 const projectsRepository = new ProjectsRepository();
 
 const createProjectsUseCase = new CreateProjectsUseCase(projectsRepository);
 
-const createProjectsController = new CreateProjectsController(createProjectsUseCase);
-
-export { createProjectsController}
+export const createProjectsController = new CreateProjectsController(createProjectsUseCase);

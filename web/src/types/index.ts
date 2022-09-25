@@ -11,3 +11,18 @@ export type CardType = {
     labels: string[];
     user: string;
 }
+
+export interface Project {
+    id:string,
+    name:string,
+    description:string,
+    authorId: string,
+    created_at?:Date
+}
+
+export type User = {
+    id:string,
+    email:string,
+    name:string,
+    avatar_img:string
+}

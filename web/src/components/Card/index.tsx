@@ -1,5 +1,5 @@
-import {Link} from 'react-router-dom'
-import { CardType } from '../../types';
+import {Link, useNavigate} from 'react-router-dom'
+import { CardType, Project } from '../../types';
 import { 
   Container, 
   ContainerCardAddNew, 
@@ -23,15 +23,21 @@ export const Card= ({data}:CardProps) => {
   );
 }
 
-export const CardProject = ()=>{
+export const CardProject = ({data}:{data:Project})=>{
+  const navigate = useNavigate();
+  
+  const handleGotoTasks = ()=>{
+    navigate("/boardTask")
+  }
+
   return(
-    <ContainerCardProject>
+    <ContainerCardProject onClick={handleGotoTasks}>
       <div className="preview">
         <img src="" alt="projectPreview" />
       </div>
       <div className="details">
-        <h3 className="tittle">Scrumbs new feature set</h3>
-        <span>Mar 22, 2019</span>
+        <h3 className="tittle">{data.name}</h3>
+        <span>{`${data?.created_at}`}</span>
       </div>
     </ContainerCardProject>
   )

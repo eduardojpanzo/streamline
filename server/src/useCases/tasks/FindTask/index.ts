@@ -6,6 +6,4 @@ const tasksRepository = new TasksRepository();
 
 const findTaskFromNameUseCase = new FindTaskFromNameUseCase(tasksRepository);
 
-const findTaskFromNameController = new FindTaskFromNameController(findTaskFromNameUseCase)
-
-export {findTaskFromNameController}
+export const findTaskFromNameController = new FindTaskFromNameController(findTaskFromNameUseCase)

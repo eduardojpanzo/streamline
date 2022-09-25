@@ -1,19 +1,27 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState,ReactNode } from 'react';
 import ReactModal from 'react-modal'
-import { SignInContainer, SignUpContainer } from './styles'
+import { useAuth } from '../../hooks/useAuth';
+import { useHandleQuery } from '../../hooks/useHandleQueryUser';
+import {UserAuthDTO, UserCreateDTO } from '../../types/dto';
+import {FormControlStyled, SignInContainer, SignUpContainer } from './styles'
 
 interface SignFormProps{
     open:boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
-interface UserAccessInfo{
-    email:string;
-    password:string;
-    confirmPassword?:string;
+
+interface FormControlProps{
+    children:ReactNode,
+    name:string,
+    type:string,
+    value?:string,
+    handleChange:(event:ChangeEvent<HTMLInputElement>)=>void
 }
 
 export const SignInForm = ({open,setOpen}:SignFormProps)=>{
-    const [userInfo,setUserInfo] = useState<UserAccessInfo>({} as UserAccessInfo);
+    const [userInfo,setUserInfo] = useState<UserAuthDTO>({} as UserAuthDTO);
+    const {autheticate} = useHandleQuery();
+    const {keepingToken} = useAuth();
 
     const handleRequestCloseModal = ()=>{
         setOpen(false)
@@ -21,13 +29,19 @@ export const SignInForm = ({open,setOpen}:SignFormProps)=>{
     const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
         setUserInfo({...userInfo,[e.target.name]:e.target.value})
     }
-    const handleSubmit = (e:FormEvent)=>{
+    const handleSubmit = async (e:FormEvent)=>{
         e.preventDefault();
-        console.log(userInfo);
         
-        console.log("Fazendo o login...");
+        try {
+            const {token, user} = await autheticate(userInfo);
 
-        handleRequestCloseModal()
+            keepingToken({token,user})
+            
+            handleRequestCloseModal()
+        } catch (error) {
+            alert(error)
+        }
+
     }
 
     return(
@@ -58,7 +72,8 @@ export const SignInForm = ({open,setOpen}:SignFormProps)=>{
 
 
 export const CadastreForm = ({open,setOpen}:SignFormProps)=>{
-    const [userInfo,setUserInfo] = useState<UserAccessInfo>({} as UserAccessInfo);
+    const {createAccount} = useHandleQuery();
+    const [userInfo,setUserInfo] = useState<UserCreateDTO>({} as UserCreateDTO);
     
     const handleRequestCloseModal=()=>{
         setOpen(false)
@@ -66,18 +81,24 @@ export const CadastreForm = ({open,setOpen}:SignFormProps)=>{
     const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
         setUserInfo({...userInfo,[e.target.name]:e.target.value})
     }
-    const handleSubmit = (e:FormEvent)=>{
+    
+    const handleSubmit = async (e:FormEvent)=>{
         e.preventDefault();
-        console.log(userInfo);
 
         if (!(userInfo.password === userInfo.confirmPassword)) {
             alert("As palavras passes não são iguais..");
             return
         }
 
-        console.log("Fazendo o cadastro...");
+        try {
+            await createAccount(userInfo);
+            alert("User Created");
 
-        handleRequestCloseModal()
+            handleRequestCloseModal();
+        } catch (err) {
+            alert(err)
+        }
+
     }
 
     return(
@@ -105,6 +126,11 @@ export const CadastreForm = ({open,setOpen}:SignFormProps)=>{
                 <span className="or">ou</span>
 
                 <label className="formControl">
+                    <input type='text' name="name" onChange={handleChange}/>
+                    <span>Seu Nome</span>
+                </label>
+
+                <label className="formControl">
                     <input type='email' name="email" onChange={handleChange}/>
                     <span>Email</span>
                 </label>
@@ -122,5 +148,14 @@ export const CadastreForm = ({open,setOpen}:SignFormProps)=>{
                 <button type='submit'>Cadastrar</button>
             </SignUpContainer>
         </ReactModal>
+    )
+}
+
+export const FormControl = ({children,name,type,handleChange,value}:FormControlProps)=>{ 
+    return(
+        <FormControlStyled>
+            <input type={type} name={name} onChange={handleChange} value={value}/>
+            <span>{children}</span>
+        </FormControlStyled>
     )
 }

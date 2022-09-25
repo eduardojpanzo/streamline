@@ -25,3 +25,7 @@ export interface ICreateTaskDTO {
     projectId: string
     created_at?:Date
 }
+export interface IAuthenticateUserDTO {
+    email:string
+    password:string
+}

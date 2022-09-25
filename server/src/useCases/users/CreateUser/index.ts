@@ -7,6 +7,4 @@ const usersRepository = new UsersRepository();
 
 const createUsersUseCase = new CreateUsersUseCase(usersRepository);
 
-const createUsersController = new CreateUsersController(createUsersUseCase);
-
-export { createUsersController}
+export const createUsersController = new CreateUsersController(createUsersUseCase);

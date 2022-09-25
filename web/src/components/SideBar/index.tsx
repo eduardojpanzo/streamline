@@ -1,24 +1,28 @@
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 import { Container, Logo, MenuVertical, UserSection } from './styles';
 
 export const SideBar = () => {
+    const {user} = useAuth();
+
   return (
     <Container>
         <div>
             <Logo>S</Logo>
             <MenuVertical>
                 <ul>
-                    <li><a href="#" className='active'>Home</a></li>
-                    <li><a href="#">Tasks</a></li>
-                    <li><a href="#">Settings</a></li>
+                    <li><Link to={`/`} className='active'>Home</Link></li>
+                    <li><Link to={`/boardTask`}>Tasks</Link></li>
+                    <li><Link to={`/settings`}>Setting</Link></li>
                 </ul>
             </MenuVertical>
         </div>
 
         <UserSection>
             <div className="avatar">
-                <img src="" alt="" />
+                <img src={user?.avatar_img} alt={user?.name} />
             </div>
-            <span>Name user</span>
+            <span>{user?.name}</span>
         </UserSection>
     </Container>
   );
