@@ -26,3 +26,12 @@ export type User = {
     name:string,
     avatar_img:string
 }
+
+export type Task = {
+    id:string,
+    name:string,
+    description:string,
+    status:string,
+    projectId: string,
+    created_at?:Date
+}

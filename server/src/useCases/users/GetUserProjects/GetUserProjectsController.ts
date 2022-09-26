@@ -6,7 +6,6 @@ export class GetUserProjectsController{
 
     async handle(req:Request,res:Response) {
         const {authorId} = req.params;
-
         try{
             const projects = await this.getUserProjectsUseCase.execute(authorId);
             return res.status(200).send(projects);

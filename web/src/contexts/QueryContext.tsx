@@ -1,15 +1,17 @@
 
 import { createContext, ReactNode } from "react"
 import { api } from "../service/api";
-import { Project, User } from "../types";
-import { ICreateProjectDTO, UserAuthDTO, UserCreateDTO } from "../types/dto";
+import { Project, User,Task } from "../types";
+import { ICreateProjectDTO, IGhangeTaskDTO, UserAuthDTO, UserCreateDTO } from "../types/dto";
 
 type QueryContextType ={
     createAccount:(userInfo:UserCreateDTO)=>Promise<any>
     autheticate:(user:UserAuthDTO)=>Promise<{token:string,user:User}>
-    recoverUserInformation:(token:string)=>Promise<User>;
+    recoveryUserInformation:(token:string)=>Promise<User>;
     getUserProjects:(authorId:string)=>Promise<Project[]>;
     createProject:(project:ICreateProjectDTO)=>Promise<void>;
+    getProjectTasks:(projectId:string)=>Promise<Task[]>;
+    changeTaskStatus:(changeData:IGhangeTaskDTO)=>Promise<Task>;
 }
 
 interface QueryContextProviderProps{
@@ -33,7 +35,9 @@ export function QueryContextProvider({children}:QueryContextProviderProps){
 
         if (res.status === 404) {
             throw new Error("User already Exists");
-        }        
+        }
+        
+        console.log(res.data);
         
         return {
             token:res.data.token,
@@ -41,25 +45,20 @@ export function QueryContextProvider({children}:QueryContextProviderProps){
         }
     }
 
-    const recoverUserInformation =  async(token:string)=>{
-        //from this token search a user belong
-        const user = {
-            id: "d5c238ea-cb7b-4f69-9ef2-d1fe6f9bb1a1",
-            email: "johne@gmail.com",
-            name: "Paulino Passil",
-            avatar_img: 'null'
-        }
+    const recoveryUserInformation =  async(token?:string)=>{
+        const res = await api.get("/users");
+        const user = await res.data;
+        
+        if (res.status === 404) {
+            throw new Error("User Is not Exists");
+        }        
 
         return user
     }
 
     const getUserProjects = async (authorId:string)=>{
         const res = await api.get(`/users/projects/${authorId}`);
-
-        const projects = await res.data;
-
-        console.log(projects);
-        
+        const projects = await res.data;        
 
         return projects;
     }
@@ -74,22 +73,27 @@ export function QueryContextProvider({children}:QueryContextProviderProps){
 
     const getProjectTasks = async (projectId:string)=>{
         const res = await api.get(`projects/tasks/${projectId}`);
-
         const tasks = await res.data;
 
-        console.log(tasks);
-        
-
         return tasks;
+    }
+
+    const changeTaskStatus = async ({taskId,nextStatus}:IGhangeTaskDTO)=>{
+        const res = await api.put(`/tasks/change`,{taskId,nextStatus});
+        const task = await res.data;
+
+        return task;
     }
 
     return(
         <QueryContext.Provider value={{
             createAccount,
             autheticate,
-            recoverUserInformation,
+            recoveryUserInformation,
             getUserProjects,
-            createProject
+            createProject,
+            getProjectTasks,
+            changeTaskStatus
         }}>
             {children}
         </QueryContext.Provider>

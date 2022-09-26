@@ -1,12 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { parseCookies, setCookie, destroyCookie} from "nookies";
-import { toast } from "react-toastify";
 import { useHandleQuery } from "../hooks/useHandleQueryUser";
-
-type KeepTokenProps ={
-    token:string,
-    user:User
-}
+import {UserAuthDTO} from '../types/dto';
 
 type User = {
     id: string,
@@ -18,38 +13,41 @@ type User = {
 type AuthContextType = {
     user:User | null
     isAuthenticated: boolean;
-    keepingToken:({token,user}:KeepTokenProps)=> Promise<void>;
+    signIn:({email,password}:UserAuthDTO)=> Promise<any>;
     logout:()=> void;
 }
 
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({children}:{children:JSX.Element}) {
-    const {recoverUserInformation} = useHandleQuery();
+    const {recoveryUserInformation,autheticate} = useHandleQuery();
 
-    const [user, setUser] = useState({} as User | null)    
+    const [user, setUser] = useState<User | null>(null);    
     const isAuthenticated = !!user;
 
     useEffect(()=>{
         const {'SLine_token':token} = parseCookies();
 
         if (token) {
-            recoverUserInformation(token).then(
-                user=>setUser(user))
+            recoveryUserInformation(token)
+            .then(user=>setUser(user))
+            .catch(()=>setUser(null))
         }
     },[])
 
-    async function keepingToken({token,user}:KeepTokenProps) {
-        if (token) {
-            setCookie(undefined,'SLine_token',token,{
-                maxAge:60*60*24, //24 hour
-            });
+    const signIn = async({email,password}:UserAuthDTO) =>{
+        const {token, user} = await autheticate({email,password});
 
-            setUser(user);
-            return;
+        if (!token) {
+            throw new Error("Not Existis user");
         }
 
-        toast.error('Problema ao tentar logar..');
+        setCookie(undefined,'SLine_token',token,{
+            maxAge:60*60*24, //24 hour
+        });
+
+        setUser(user);
+        return;
     }
 
     async function logout() {
@@ -58,7 +56,12 @@ export function AuthProvider({children}:{children:JSX.Element}) {
     }
 
     return(
-        <AuthContext.Provider value={{user, isAuthenticated, keepingToken,logout}}>
+        <AuthContext.Provider value={{
+            user,
+            isAuthenticated,
+            signIn,
+            logout
+        }}>
             {children}
         </AuthContext.Provider>
     )

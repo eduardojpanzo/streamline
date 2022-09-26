@@ -24,3 +24,8 @@ export interface ICreateTaskDTO {
     projectId: string
     created_at?:Date
 }
+
+export interface IGhangeTaskDTO {
+    taskId:string,
+    nextStatus:any
+}

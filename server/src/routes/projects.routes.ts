@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { createProjectsController } from "../useCases/projects/CreateProject";
 import { findProjectFromNameController } from "../useCases/projects/FindProject";
-import { getUserProjectsController } from "../useCases/users/GetUserProjects";
+import { getProjectTasksController } from "../useCases/projects/GetProjectTasks";
 
 const projectsRoutes = Router();
 
@@ -13,8 +13,8 @@ projectsRoutes.get("/:name",(req,res)=>{
     return findProjectFromNameController.handle(req,res);
 })
 
-projectsRoutes.get("/tasks/:id",(req,res)=>{
-    return getUserProjectsController.handle(req,res);
+projectsRoutes.get("/tasks/:projectId",(req,res)=>{
+    return getProjectTasksController.handle(req,res);
 })
 
 export {projectsRoutes}

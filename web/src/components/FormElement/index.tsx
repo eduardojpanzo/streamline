@@ -20,8 +20,7 @@ interface FormControlProps{
 
 export const SignInForm = ({open,setOpen}:SignFormProps)=>{
     const [userInfo,setUserInfo] = useState<UserAuthDTO>({} as UserAuthDTO);
-    const {autheticate} = useHandleQuery();
-    const {keepingToken} = useAuth();
+    const {signIn} = useAuth();
 
     const handleRequestCloseModal = ()=>{
         setOpen(false)
@@ -33,9 +32,7 @@ export const SignInForm = ({open,setOpen}:SignFormProps)=>{
         e.preventDefault();
         
         try {
-            const {token, user} = await autheticate(userInfo);
-
-            keepingToken({token,user})
+            await signIn(userInfo);
             
             handleRequestCloseModal()
         } catch (error) {

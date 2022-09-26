@@ -1,6 +1,5 @@
 import { useState,useEffect, ChangeEvent,FormEvent} from 'react';
 import ReactModal from 'react-modal';
-import { useResolvedPath } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useHandleQuery } from '../../hooks/useHandleQueryUser';
 import { Project } from '../../types';
@@ -49,7 +48,9 @@ export const Outset: React.FC = () => {
   return(
     <Container>
         <CardAddNewProject handleClick={()=>setOpenModal(true)}/>
-        {projects.map(project=><CardProject key={project.id} data={project}/>)}
+        {projects.length>0 && (projects.map(project=>
+            <CardProject key={project.id} data={project}/>
+        ))}
         
         <ReactModal
          isOpen={openModal}

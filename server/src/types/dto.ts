@@ -29,3 +29,8 @@ export interface IAuthenticateUserDTO {
     email:string
     password:string
 }
+
+export interface IGhangeTaskDTO {
+    taskId:string,
+    nextStatus:any
+}
