@@ -42,8 +42,12 @@ export default createGlobalStyle`
     ul{
         list-style:none;
     }
+    a{
+        text-decoration: none;
+        color:inherit
+    }
     button{
-        padding: 0.4rem 0.8rem;
+        padding: 0.4rem;
         border:none;
         outline: none;
         transition: filter 0.2s;

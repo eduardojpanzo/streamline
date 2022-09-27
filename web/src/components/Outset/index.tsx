@@ -7,7 +7,7 @@ import { ICreateProjectDTO } from '../../types/dto';
 import { CardAddNewProject, CardProject } from '../Card';
 import { FormControl } from '../FormElement';
 import { Button } from '../FormElement/styles';
-import { Container } from './styles';
+import { Container, ModalContainer } from './styles';
 
 export const Outset: React.FC = () => {
   const {user} = useAuth();
@@ -59,6 +59,8 @@ export const Outset: React.FC = () => {
              {content:{height:"max-content",width:"max-content",margin:"0 auto"}}
          }
         >
+        <ModalContainer>
+          <h4>Criar Novo Projecto</h4>
           <form onSubmit={handleSubmit}>
             <input type="hidden" name="id" value={user?.id} onChange={handleChange}/>
 
@@ -74,6 +76,7 @@ export const Outset: React.FC = () => {
               Criar
             </Button>
           </form>
+        </ModalContainer>
         </ReactModal>
     </Container>
   );

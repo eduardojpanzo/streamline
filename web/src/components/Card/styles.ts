@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const ContainerTask = styled.div`
     position:relative;
     background:#fff;
     border-radius:5px;
@@ -12,21 +12,40 @@ export const Container = styled.div`
 
     header{
         position:absolute;
-        top: -22px;
-        left:15px;
+        top: -32px;
+        left:10px;
+
+        h3{
+            font-size:0.82rem;
+            margin-left:10px;
+        }
     }
 
     p{
         font-weight:500;
         line-height:20px;
     }
-    
-    img{
-        width: 24px;
-        height: 24px;
-        border-radius:2px;
-        margin-top: 5px;
+
+    div{
+        display: flex;
+        align-items: center;
+        gap:5px;
+
+        img{
+            width: 24px;
+            height: 24px;
+            border-radius:2px;
+            margin-top: 5px;
+        }
+
+        button{
+            width: 24px;
+            height: 24px;
+            border-radius:2px;
+            margin-top: 5px;
+        }
     }
+    
 `;
 
 export const Label = styled.span`
@@ -40,7 +59,7 @@ export const Label = styled.span`
 
 export const ContainerCardProject = styled.div`
     width: 230px;
-    height: 240px;
+    height: 180px;
     overflow:hidden;
     border-radius:8px;
     border:1px solid #fff5;
@@ -49,17 +68,46 @@ export const ContainerCardProject = styled.div`
 
     display: flex;
     flex-direction: column;
-    .preview{
-        flex:2.5;
-        background: rgba(0,0,0,0.3);
-    }    
-    .details{
-        flex:1;
+
+    header{
+        height: 70px;
         padding: 5px;
-        background: var(--white);
+        background: var(--gray-700);
+        background: ${props=>props.color?props.color:"#323238"};
+        text-align:center;
+        font-size:1.2rem;
+        font-weight:bolder;
+        text-shadow:.5px .2px #111;
+        color:#fff;
+    }
+
+    section{
+        flex:1;
+        padding: 8px 5px;
+        background: var(--gray-100);
+
+        display: flex;
+        flex-direction:column;
+        justify-content: space-between;
 
         span{
-            color: var(--gray-700);
+            display: block;
+            color: var(--gray-500);
+            margin-bottom: 3px;
+        }
+
+        a{
+            display: inline-block;
+            padding: 0.3rem;
+            outline: none;
+            transition: filter 0.2s;
+            cursor: pointer;
+            border-radius:4px;
+            background: var(--gray-300);
+
+            &:hover{
+                filter: brightness(0.82);
+            }
         }
     }
 `
@@ -67,7 +115,7 @@ export const ContainerCardProject = styled.div`
 export const ContainerCardAddNew = styled.div`
     position: relative;
     width: 230px;
-    height: 240px;
+    height: 180px;
     background: var(--gray-100);
     border-radius:8px;
     border:1px solid var(--violet-500);

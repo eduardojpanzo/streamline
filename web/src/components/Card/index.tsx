@@ -1,51 +1,55 @@
-import {Link, useNavigate} from 'react-router-dom'
-import { CardType, Project } from '../../types';
+import { MdAdd } from 'react-icons/md';
+import {Link} from 'react-router-dom'
+import {Project, Task } from '../../types';
 import { 
-  Container, 
+  ContainerTask, 
   ContainerCardAddNew, 
   ContainerCardProject, 
   Label 
 } from './styles';
 
-interface CardProps{
-  data:CardType;
+interface CardTaskProps{
+  data:Task;
 }
 
-export const Card= ({data}:CardProps) => {
+interface CardAddNewProjectProps{
+  handleClick:()=>void;
+}
+
+export const CardTask= ({data}:CardTaskProps) => {
   return (
-    <Container>
+    <ContainerTask>
       <header>
-        <Label color={data.labels[0]}/>
+        <Label color={'#1237bc'}/>
+        <h3>{data.name}</h3>
       </header>
-      <p>{data.content}</p>
-      <img src={data.user} alt={``} />
-    </Container>
+      <p>{data.description}</p>
+      <div>
+        <img src={`https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/profile.png`} alt={``} />
+        <button><MdAdd/></button>
+      </div>
+    </ContainerTask>
   );
 }
 
 export const CardProject = ({data}:{data:Project})=>{
-  const navigate = useNavigate();
-  
-  const handleGotoTasks = ()=>{
-    navigate("/boardTask")
-  }
+  const handleOpenProject = ()=>{
 
+  }
   return(
-    <ContainerCardProject onClick={handleGotoTasks}>
-      <div className="preview">
-        <img src="" alt="projectPreview" />
-      </div>
-      <div className="details">
-        <h3 className="tittle">{data.name}</h3>
-        <span>{`${data?.created_at}`}</span>
-      </div>
+    <ContainerCardProject onClick={handleOpenProject} color="#2238ff">
+      <header>
+        {data.name}
+      </header>
+      <section>
+        <p>{data.description}</p>
+        <div>
+          <span>{`${data?.created_at}`}</span>
+          <Link to={`boardTask/${data.id}`}>Go to Tasks</Link>
+        </div>
+      </section>
     </ContainerCardProject>
   )
-}
-
-
-interface CardAddNewProjectProps{
-  handleClick:()=>void;
 }
 
 export function CardAddNewProject({handleClick}:CardAddNewProjectProps){

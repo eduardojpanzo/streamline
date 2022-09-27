@@ -4,17 +4,21 @@ import { CadastreForm, SignInForm } from '../FormElement';
 import { Container } from './styles';
 
 export function Header() {
-  const {user} = useAuth()
+  const {user,logout} = useAuth()
 
   const [openSignIn, setOpenSignIn] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
+
+  function handleLogOut() {
+    logout()
+  }
 
   return (
     <Container>
       <h1>Streamline</h1>
       
       <div className='rightSide'>
-        {!user &&
+        {!user?
           (<div className='acessButton'>
             <button className={"signIn"} onClick={()=>setOpenSignIn(true)}>
               Logar
@@ -23,7 +27,11 @@ export function Header() {
             <button className={"signUp"} onClick={()=>setOpenSignUp(true)}>
               Cadastro
             </button>
-          </div>)
+          </div>):(
+            <button className={"signUp"} onClick={handleLogOut}>
+              Logout
+            </button>
+          )
         }
 
         <div className='timeDate'>

@@ -7,3 +7,10 @@ export const Container = styled.div`
     flex-wrap:wrap;
     gap:20px;
 `
+
+export const ModalContainer = styled.div`
+    
+    h4{
+        margin-bottom: 20px;
+    }
+`

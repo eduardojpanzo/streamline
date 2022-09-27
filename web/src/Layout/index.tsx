@@ -14,7 +14,7 @@ export const Layout: React.FC = () => {
             <Header/>
             <Routes>
               <Route path='/' element={<Outset/>}/>
-              <Route path='/boardTask' element={<Board/>}/>
+              <Route path='/boardTask/:projectId' element={<Board/>}/>
             </Routes>
         </section>
     </Container>

@@ -38,4 +38,11 @@ export const Container = styled.div<IContainer>`
     ul{
         margin-top:30px;
     }
+`;
+
+export const ModalContainer = styled.div`
+    
+    h4{
+        margin-bottom: 20px;
+    }
 `

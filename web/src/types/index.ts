@@ -35,3 +35,7 @@ export type Task = {
     projectId: string,
     created_at?:Date
 }
+
+export type ProjectDataType = {
+    tasks:Task[],
+  }
