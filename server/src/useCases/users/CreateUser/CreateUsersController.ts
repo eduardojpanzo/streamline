@@ -8,8 +8,12 @@ export class CreateUsersController {
         const {email,name,password} = req.body;
 
         try {
-            await this.createUserUseCase.execute({email,name,password})
-            return res.status(200).send();
+            const user = await this.createUserUseCase.execute({email,name,password})
+            return res.status(200).json({
+                id: user.id,
+                name: user.name,
+                email: user.email
+            });
 
         } catch (err) {
             return res.status(409).json({ message: err.message || "unexpected error" });

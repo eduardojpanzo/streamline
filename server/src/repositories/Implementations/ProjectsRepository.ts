@@ -6,15 +6,19 @@ import { ICreateProjectDTO} from "../../types/dto";
 import { IProjectsRepository } from "../IProjectsRepository";
 
 export class ProjectsRepository implements IProjectsRepository {
-    async getProjectTasks(projectId: string):Promise<Task[]>{
-        const tasks =  await prismaClient.task.findMany({
-            where:{
-                projectId
+
+    async create({name,description,authorId,color}:ICreateProjectDTO):Promise<Project>{
+        const project = await prismaClient.project.create({
+            data:{
+                name,
+                description,
+                authorId,
+                color
             }
         })
-        
-        return tasks;
-    }
+
+        return project
+    };
 
     async findByName(name: string):Promise<Project>{
          const project = await prismaClient.project.findFirst({
@@ -35,15 +39,14 @@ export class ProjectsRepository implements IProjectsRepository {
 
          return project;
     };
-    
-    async create({name,description,authorId}:ICreateProjectDTO):Promise<void>{
-        await prismaClient.project.create({
-            data:{
-                name,
-                description,
-                authorId
+
+    async getProjectTasks(projectId: string):Promise<Task[]>{
+        const tasks =  await prismaClient.task.findMany({
+            where:{
+                projectId
             }
         })
-    } ;
-
+        
+        return tasks;
+    }
 }

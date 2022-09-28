@@ -7,11 +7,11 @@ export class AuthenticateUserController {
         const {email, password} = req.body;
 
         try {
-            const user_token = await this.authenticateUserUseCase.execute({
+            const tokenAndUser = await this.authenticateUserUseCase.execute({
                 email,
                 password
             })
-            return res.status(201).json(user_token);
+            return res.status(201).json(tokenAndUser);
 
         } catch (err) {
             return res.status(404).send(err);

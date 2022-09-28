@@ -1,10 +1,14 @@
 import { IProjectsRepository } from "../../../repositories/IProjectsRepository";
+import { IUsersProjectsRepository } from "../../../repositories/IUsersProjectsRepository";
 import { ICreateProjectDTO} from "../../../types/dto";
 
 export class CreateProjectsUseCase {
-    constructor (private projectsRepository:IProjectsRepository){}
+    constructor (
+        private projectsRepository:IProjectsRepository,
+        private usersProjectsRepository: IUsersProjectsRepository
+    ){}
 
-    async execute({name, description,authorId}:ICreateProjectDTO):Promise<void>{
+    async execute({name, description,authorId,color}:ICreateProjectDTO):Promise<void>{
 
         const userAlreadyExists = await this.projectsRepository.findByName(name);
         
@@ -12,10 +16,20 @@ export class CreateProjectsUseCase {
             throw new Error("Project already exists");
         }
         
-        await this.projectsRepository.create({            
+        const project = await this.projectsRepository.create({            
             name,
             description,
-            authorId
+            authorId,
+            color
+        })
+
+        if (!project) {
+            throw new Error("Somethings is wrongs");
+        }
+
+        const userProject = await this.usersProjectsRepository.setProjectAdmin({
+            userId: authorId,
+            projectId: project.id
         })
     }
 }

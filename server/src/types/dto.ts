@@ -15,14 +15,32 @@ export interface ICreateProjectDTO {
     name:string
     description:string
     authorId: string
+    color:string
     created_at?:Date
+}
+
+export interface ISetAdminDTO {
+    userId:string
+    projectId:string
+}
+
+export interface ISetHolderDTO {
+    userId:string
+    taskId:string
+}
+
+export interface IMemberProjectDTO {
+    userId:string
+    projectId:string
 }
 
 export interface ICreateTaskDTO {
     name:string
     description:string
     status:string
-    projectId: string
+    color:string,
+    projectId: string,
+    userId?: string,
     created_at?:Date
 }
 export interface IAuthenticateUserDTO {

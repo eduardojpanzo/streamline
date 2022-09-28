@@ -5,6 +5,21 @@ import { ICreateTaskDTO, IGhangeTaskDTO } from "../../types/dto";
 import { ITasksRepository } from "../ITasksRepository";
 
 export class TasksRepository implements ITasksRepository {
+    
+    async create({name,description,status,projectId,color}:ICreateTaskDTO):Promise<Task>{
+        const tasks = await  prismaClient.task.create({
+            data:{
+                name,
+                description,
+                status,
+                projectId,
+                color
+            }
+        })
+
+        return tasks
+    } ;
+    
     async findById(id: string):Promise<Task>{
         const task = await prismaClient.task.findFirst({
             where:{
@@ -24,17 +39,6 @@ export class TasksRepository implements ITasksRepository {
         
         return task;
     };
-    
-    async create({name,description,status,projectId}:ICreateTaskDTO):Promise<void>{
-        await  prismaClient.task.create({
-            data:{
-                name,
-                description,
-                status,
-                projectId
-            }
-        })
-    } ;
     
     async changeTaskStatus({ taskId, nextStatus }: IGhangeTaskDTO):Promise<Task>{
        const task =  await prismaClient.task.update({

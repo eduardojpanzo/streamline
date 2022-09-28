@@ -5,13 +5,14 @@ export class CreateProjectsController {
     constructor(private createProjectsUseCase: CreateProjectsUseCase) {}
 
     async handle(req:Request, res:Response){
-        const {name,description,authorId} = req.body;
+        const {name,description,authorId,color} = req.body;
 
         try {
             await this.createProjectsUseCase.execute({
                 name,
                 description,
-                authorId
+                authorId,
+                color
             })
             
             return res.status(200).send();

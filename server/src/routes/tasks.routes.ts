@@ -1,11 +1,12 @@
 import { Router } from "express";
+import { ensureAdmin } from "../middlewares/ensureAdmin";
 import { changeTaskStatusController } from "../useCases/tasks/ChangeTaskStatus";
 import { createTasksController } from "../useCases/tasks/CreateTask";
 import { findTaskFromNameController } from "../useCases/tasks/FindTask";
 
 const tasksRoutes = Router();
 
-tasksRoutes.post("/",(req,res)=>{
+tasksRoutes.post("/",ensureAdmin,(req,res)=>{
     return createTasksController.handle(req,res)
 })
 

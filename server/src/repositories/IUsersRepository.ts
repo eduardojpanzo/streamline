@@ -6,5 +6,5 @@ export interface IUsersRepository{
     findByEmail: (email: string) => Promise<User>;
     findById: (id: string) => Promise<User>;
     getUserProjects:(authorId:string)=>Promise<Project[]>;
-    create:(userData: ICreateUserDTO) => Promise<void>;
+    create:(userData: ICreateUserDTO) => Promise<User>;
 }

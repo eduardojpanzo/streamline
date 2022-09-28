@@ -28,16 +28,18 @@ export class UsersRepository implements IUsersRepository {
          return user;
     } ;
     
-    async create({email,name,password}:ICreateUserDTO):Promise<void>{
+    async create({email,name,password}:ICreateUserDTO):Promise<User>{
         const hashPassword = await bcrypt.hash(password, 10)
         
-        await prismaClient.user.create({
+        const user = await prismaClient.user.create({
             data:{
                 email,
                 name,
                 password:hashPassword
             }
         })
+
+        return user
     };
 
     async getUserProjects(authorId: string):Promise<Project[]>{

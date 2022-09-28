@@ -6,6 +6,7 @@ export class Task {
   public name: string;
   public description:string
   public status:string
+  public color:string
   public projectId: string
   public created_at?:Date
 

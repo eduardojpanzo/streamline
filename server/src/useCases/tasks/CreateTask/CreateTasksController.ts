@@ -5,14 +5,23 @@ export class CreateTasksController {
     constructor(private createTasksUseCase: CreateTasksUseCase) {}
 
     async handle(req:Request, res:Response){
-        const {name,description,status,projectId} = req.body;
-
+        const {
+            name,
+            description,
+            status,
+            projectId,
+            color,
+            userId
+        } = req.body;
+        
         try {
             await this.createTasksUseCase.execute({
                 name,
                 description,
                 projectId,
-                status
+                status,
+                color,
+                userId
             })
             
             return res.status(200).send();

@@ -1,10 +1,11 @@
+import { User } from "../../../model/User";
 import { IUsersRepository } from "../../../repositories/IUsersRepository";
 import { ICreateUserDTO } from "../../../types/dto";
 
 export class CreateUsersUseCase {
     constructor (private usersRepository:IUsersRepository){}
 
-    async execute({email,name, password}:ICreateUserDTO):Promise<void>{
+    async execute({email,name, password}:ICreateUserDTO):Promise<User>{
 
         const userAlreadyExists = await this.usersRepository.findByEmail(email)
         
@@ -12,10 +13,12 @@ export class CreateUsersUseCase {
             throw new Error("User already exists");
         }
         
-        await this.usersRepository.create({
+        const user =  await this.usersRepository.create({
             email,
             name,
             password
         })
+
+        return user
     }
 }

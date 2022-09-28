@@ -5,6 +5,7 @@ export class Project {
 
   public name: string;
   public description:string
+  public color:string
   public created_at?:Date
   public authorId: string
 
