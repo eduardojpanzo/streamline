@@ -1,23 +1,11 @@
-import { useState } from 'react';
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
-import { useHandleQuery } from '../../hooks/useHandleQueryUser';
-import { loadLists } from '../../services/api';
-import { ListType, ProjectDataType } from '../../types';
+import { useBoard } from '../../hooks/useBoard';
 import { List } from '../List';
 
 import { Container } from './styles';
 
-const lists = loadLists() as ListType[];
 
-export const Board: React.FC = () => {
-  const {projectId} = useParams();
-  const {getProjectTasks} = useHandleQuery();
-
-  const {data,isFetching} = useQuery('projectData',async ()=>{
-    const tasks = await getProjectTasks(projectId!);
-    return tasks;
-  })
+export const Board = () => {
+  const {data, isFetching} = useBoard();
 
   if (isFetching) {
     return(
@@ -35,10 +23,10 @@ export const Board: React.FC = () => {
   
     return(
       <Container>
-        <List creatable title='Tarefas' tasks={todoTask}/>
-        <List title='Fazendo' tasks={processTask}/>
-        <List title='Pausado' tasks={stopedTask}/>
-        <List done title='Concluído' tasks={doneTask}/>
+        <List list={'todo'} creatable title='Tarefas' tasks={todoTask}/>
+        <List list={'process'} title='Fazendo' tasks={processTask}/>
+        <List list={'stoped'} title='Pausado' tasks={stopedTask}/>
+        <List list={'done'} done title='Concluído' tasks={doneTask}/>
       </Container>
     );
   }

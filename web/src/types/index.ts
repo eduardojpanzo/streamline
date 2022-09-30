@@ -39,3 +39,9 @@ export type Task = {
 export type ProjectDataType = {
     tasks:Task[],
   }
+
+export type DragItemtype = {
+    id:string,
+    index:number,
+    list:string
+}

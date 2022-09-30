@@ -48,4 +48,16 @@ export class UsersProjectsRepository implements IUsersProjectsRepository {
 
         return userProject
     }
+
+    //buscar todos os projectos de um user onde ele é admin
+
+
+    //buscar admins de Projecoto
+
+    
+    
+    //buscar todos os projectos de um user onde ele é member
+    
+    
+    //buscar members de um projecto
 }

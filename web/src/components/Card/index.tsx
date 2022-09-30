@@ -1,5 +1,8 @@
+import { useRef } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 import { MdAdd } from 'react-icons/md';
 import {Link} from 'react-router-dom'
+
 import {Project, Task } from '../../types';
 import { 
   ContainerTask, 
@@ -10,25 +13,41 @@ import {
 
 interface CardTaskProps{
   data:Task;
+  index:number;
+  list: string;
 }
 
 interface CardAddNewProjectProps{
   handleClick:()=>void;
 }
 
-export const CardTask= ({data}:CardTaskProps) => {
+export const CardTask= ({data,index,list}:CardTaskProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
+    type: 'TASK_CARD',
+    item:{id:data.id, index, list},
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging()
+    })
+  }))
+
+  drag(ref)
+
   return (
-    <ContainerTask>
-      <header>
-        <Label color={'#1237bc'}/>
-        <h3>{data.name}</h3>
-      </header>
-      <p>{data.description}</p>
-      <div>
-        <img src={`https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/profile.png`} alt={``} />
-        <button><MdAdd/></button>
-      </div>
+    <div ref={dragPreview} style={{ opacity: isDragging ? 0.5 : 1}}>
+      <ContainerTask role='Handle' ref={ref}>
+        <header>
+          <Label color={'#1237bc'}/>
+          <h3>{data.name}</h3>
+        </header>
+        <p>{data.description}</p>
+        <div>
+          <img src={`https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/profile.png`} alt={``} />
+          <button><MdAdd/></button>
+        </div>
     </ContainerTask>
+    </div>
   );
 }
 

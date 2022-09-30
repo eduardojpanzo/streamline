@@ -1,17 +1,21 @@
 import { useState,useEffect, ChangeEvent,FormEvent} from 'react';
 import ReactModal from 'react-modal';
+
 import { useAuth } from '../../hooks/useAuth';
 import { useHandleQuery } from '../../hooks/useHandleQueryUser';
+
 import { Project } from '../../types';
 import { ICreateProjectDTO } from '../../types/dto';
+
 import { CardAddNewProject, CardProject } from '../Card';
 import { FormControl } from '../FormElement';
+
 import { Button } from '../FormElement/styles';
 import { Container, ModalContainer } from './styles';
 
 export const Outset: React.FC = () => {
   const {user} = useAuth();
-  const {getUserProjects, createProject} = useHandleQuery()
+  const {handleGetUserProjects, handleCreateProject} = useHandleQuery()
 
   const [openModal, setOpenModal] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -20,7 +24,7 @@ export const Outset: React.FC = () => {
   
   useEffect(()=>{
     if (user) {
-      getUserProjects(user.id)
+      handleGetUserProjects(user.id)
       .then(projects=>setProjects(projects))
       .catch(err=>console.log(err))
     }
@@ -39,7 +43,7 @@ export const Outset: React.FC = () => {
     e.preventDefault();
     
     if (user) {
-      await createProject({...data,authorId:user.id});
+      await handleCreateProject({...data,authorId:user.id});
       
       alert("Projecto Criado!");
     }
@@ -59,24 +63,24 @@ export const Outset: React.FC = () => {
              {content:{height:"max-content",width:"max-content",margin:"0 auto"}}
          }
         >
-        <ModalContainer>
-          <h4>Criar Novo Projecto</h4>
-          <form onSubmit={handleSubmit}>
-            <input type="hidden" name="id" value={user?.id} onChange={handleChange}/>
+          <ModalContainer>
+            <h4>Criar Novo Projecto</h4>
+            <form onSubmit={handleSubmit}>
+              <input type="hidden" name="id" value={user?.id} onChange={handleChange}/>
 
-            <FormControl handleChange={handleChange} name={'name'} type={'text'}>
-              Nome:
-            </FormControl>
+              <FormControl handleChange={handleChange} name={'name'} type={'text'}>
+                Nome:
+              </FormControl>
 
-            <FormControl handleChange={handleChange} name={'description'} type={'text'}>
-              Descrição:
-            </FormControl>
+              <FormControl handleChange={handleChange} name={'description'} type={'text'}>
+                Descrição:
+              </FormControl>
 
-            <Button type='submit'>
-              Criar
-            </Button>
-          </form>
-        </ModalContainer>
+              <Button type='submit'>
+                Criar
+              </Button>
+            </form>
+          </ModalContainer>
         </ReactModal>
     </Container>
   );

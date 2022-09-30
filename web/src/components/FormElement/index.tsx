@@ -69,7 +69,7 @@ export const SignInForm = ({open,setOpen}:SignFormProps)=>{
 
 
 export const CadastreForm = ({open,setOpen}:SignFormProps)=>{
-    const {createAccount} = useHandleQuery();
+    const {handleCreateAccount} = useHandleQuery();
     const [userInfo,setUserInfo] = useState<UserCreateDTO>({} as UserCreateDTO);
     
     const handleRequestCloseModal=()=>{
@@ -88,7 +88,7 @@ export const CadastreForm = ({open,setOpen}:SignFormProps)=>{
         }
 
         try {
-            await createAccount(userInfo);
+            await handleCreateAccount(userInfo);
             alert("User Created");
 
             handleRequestCloseModal();
@@ -139,8 +139,16 @@ export const CadastreForm = ({open,setOpen}:SignFormProps)=>{
 
                 <label className="formControl">
                     <input type='password' name="confirmPassword" onChange={handleChange}/>
-                    <span>Confirmar senha</span>
+                    <span></span>
                 </label>
+
+                <FormControl
+                    name='confirmPassword'
+                    type='password'
+                    handleChange={handleChange}
+                >
+                    Confirmar senha
+                </FormControl>
 
                 <button type='submit'>Cadastrar</button>
             </SignUpContainer>

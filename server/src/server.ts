@@ -10,4 +10,5 @@ app.use(cors())
 
 app.use(router);
 
-app.listen(2447, ()=>console.log("seerver is running"));
+
+app.listen(2447, ()=>console.log("server is running"));

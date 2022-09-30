@@ -47,7 +47,7 @@ model Task {
   name         String
   description  String
   color        String
-  status       String
+  status       String  //todo;  process;  stoped; done
   createdAt   DateTime? @default(now())
 
   HolderTask HolderTask[]

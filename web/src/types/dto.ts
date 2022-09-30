@@ -27,5 +27,6 @@ export interface ICreateTaskDTO {
 
 export interface IGhangeTaskDTO {
     taskId:string,
-    nextStatus:any
+    nextStatus:string
+    userId:string
 }

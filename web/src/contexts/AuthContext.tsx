@@ -20,7 +20,7 @@ type AuthContextType = {
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({children}:{children:JSX.Element}) {
-    const {recoveryUserInformation,autheticate} = useHandleQuery();
+    const {handleRecoveryUserInformation,handleAutheticate} = useHandleQuery();
 
     const [user, setUser] = useState<User | null>(null);    
     const isAuthenticated = !!user;
@@ -29,14 +29,14 @@ export function AuthProvider({children}:{children:JSX.Element}) {
         const {'SLine_token':token} = parseCookies();
 
         if (token) {
-            recoveryUserInformation(token)
+            handleRecoveryUserInformation(token)
             .then(user=>setUser(user))
             .catch(()=>setUser(null))
         }
     },[])
 
     const signIn = async({email,password}:UserAuthDTO) =>{
-        const {token, user} = await autheticate({email,password});
+        const {token, user} = await handleAutheticate({email,password});
 
         if (!token) {
             throw new Error("Not Existis user");

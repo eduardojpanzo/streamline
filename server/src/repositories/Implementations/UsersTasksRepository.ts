@@ -27,4 +27,9 @@ export class UsersTasksRepository implements IUsersTasksRepository {
         return userTask;
     }
 
+    //buscar os task Holder de um projecto
+
+
+    //buscar as task de um user em especifico
+
 }
