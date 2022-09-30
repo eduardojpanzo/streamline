@@ -6,7 +6,7 @@ export class User {
   public email: string;
   public name: string;
   public password: string;
-  public avatar_img: string;
+  public avatarImg: string;
 
   constructor(props: Omit<User, "id">, id?: string) {
     Object.assign(this, props);

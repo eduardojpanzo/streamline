@@ -29,7 +29,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
             id: user.id,
             email: user.email,
             name: user.name,
-            avatar_img: user.avatar_img,
+            avatarImg: user.avatarImg,
         };
         
         next();

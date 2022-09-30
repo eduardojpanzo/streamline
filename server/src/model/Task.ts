@@ -8,7 +8,7 @@ export class Task {
   public status:string
   public color:string
   public projectId: string
-  public created_at?:Date
+  public createdAt?:Date
 
   constructor(props: Omit<Task, "id">, id?: string) {
     Object.assign(this, props);

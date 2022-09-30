@@ -39,7 +39,7 @@ export class UsersProjectsRepository implements IUsersProjectsRepository {
     }
 
     async checkIfIsProjectMember({userId,projectId}: ISetAdminDTO):Promise<UserProject>{
-        const userProject = await prismaClient.adminProject.findFirst({
+        const userProject = await prismaClient.memberProject.findFirst({
             where:{
                 userId,
                 projectId

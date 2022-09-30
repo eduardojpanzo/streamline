@@ -8,7 +8,7 @@ export interface IGetUserDTO {
     id:string;
     email: string;
     name: string;
-    avatar_img:string;
+    avatarImg:string;
 }
 
 export interface ICreateProjectDTO {
@@ -16,7 +16,12 @@ export interface ICreateProjectDTO {
     description:string
     authorId: string
     color:string
-    created_at?:Date
+    createdAt?:Date
+}
+
+export interface ICheckProjectDTO{
+    name:string,
+    authorId:string,
 }
 
 export interface ISetAdminDTO {
@@ -41,14 +46,37 @@ export interface ICreateTaskDTO {
     color:string,
     projectId: string,
     userId?: string,
-    created_at?:Date
+    createdAt?:Date
 }
 export interface IAuthenticateUserDTO {
     email:string
     password:string
 }
 
+export interface ICheckTaskDTO{
+    name:string,
+    projectId:string
+}
+
 export interface IGhangeTaskDTO {
     taskId:string,
     nextStatus:any
+}
+
+export interface IBecomeAdminDTO {
+    userId: string,
+    id:string,
+    projectId:string,
+}
+
+export interface IBecomeMemberDTO {
+    userId: string,
+    id:string,
+    projectId:string,
+}
+
+export interface IBecomeTaskHolderDTO {
+    userId: string,
+    id:string,
+    taskId:string,
 }

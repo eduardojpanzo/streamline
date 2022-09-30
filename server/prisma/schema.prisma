@@ -15,14 +15,14 @@ model User {
   email      String   @unique
   name       String  
   password   String
-  avatar_img String?
+  avatarImg String?
   
-  projects  Project[]
-  adminProject  AdminProject[]
-  memberProject MemberProject[]
-  holderTask HolderTask[]
+  Project  Project[]
+  AdminProject  AdminProject[]
+  MemberProject MemberProject[]
+  HolderTask HolderTask[]
 
-  @@map("users")
+  @@map("user")
 }
 
 model Project {
@@ -30,16 +30,16 @@ model Project {
   name        String
   description String
   color       String
-  created_at  DateTime? @default(now())
+  createdAt  DateTime? @default(now())
 
-  tasks Task[]
-  adminProject  AdminProject[]
-  memberProject MemberProject[]
+  Task Task[]
+  AdminProject  AdminProject[]
+  MemberProject MemberProject[]
 
-  author User @relation(fields: [authorId], references: [id])
+  User User @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId String
 
-  @@map("projects")
+  @@map("project")
 }
 
 model Task {
@@ -48,48 +48,48 @@ model Task {
   description  String
   color        String
   status       String
-  created_at   DateTime? @default(now())
+  createdAt   DateTime? @default(now())
 
-  holderTask HolderTask[]
+  HolderTask HolderTask[]
 
-  project Project @relation(fields: [projectId], references: [id])
+  Project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId String
 
-  @@map("tasks")
+  @@map("task")
 }
 
 model AdminProject {
   id  String  @id @default(uuid())
 
   userId String
-  user User @relation(fields: [userId], references: [id])
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   projectId String
-  project Project @relation(fields: [projectId], references: [id])
+  Project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-  @@map("adminsProjects")
+  @@map("adminProject")
 }
 
 model MemberProject {
   id String @id @default(uuid())
 
   userId String
-  user User @relation(fields: [userId], references: [id])
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   projectId String
-  project Project @relation(fields: [projectId], references: [id])
+  Project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-  @@map("membersProjects")
+  @@map("memberProject")
 }
 
 model HolderTask {
   id String @id @default(uuid())
 
   userId String
-  user User @relation(fields: [userId], references: [id])
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   taskId String
-  task Task @relation(fields: [taskId], references: [id])
+  Task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
 
-  @@map("holdersTasks")
+  @@map("holderTask")
 }

@@ -1,8 +1,8 @@
 import { Task } from "../../../model/Task";
-import { ProjectsRepository } from "../../../repositories/Implementations/ProjectsRepository";
+import { IProjectsRepository } from "../../../repositories/IProjectsRepository";
 
 export class GetProjectTasksUseCase {
-    constructor(private projectsRepository: ProjectsRepository){}
+    constructor(private projectsRepository: IProjectsRepository){}
 
     async execute(projectId:string):Promise<Task[]>{
         const tasks = await this.projectsRepository.getProjectTasks(projectId);

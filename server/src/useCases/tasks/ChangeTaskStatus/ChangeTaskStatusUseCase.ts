@@ -1,8 +1,8 @@
-import { TasksRepository } from "../../../repositories/Implementations/TasksRepository";
+import { ITasksRepository } from "../../../repositories/ITasksRepository";
 import { IGhangeTaskDTO } from "../../../types/dto";
 
 export class ChangeTaskStatusUseCase {
-    constructor(private tasksRepository: TasksRepository) {}
+    constructor(private tasksRepository: ITasksRepository) {}
 
     async execute({taskId,nextStatus}:IGhangeTaskDTO){
 

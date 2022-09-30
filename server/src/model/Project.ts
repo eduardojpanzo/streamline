@@ -6,7 +6,7 @@ export class Project {
   public name: string;
   public description:string
   public color:string
-  public created_at?:Date
+  public createdAt?:Date
   public authorId: string
 
   constructor(props: Omit<Project, "id">, id?: string) {

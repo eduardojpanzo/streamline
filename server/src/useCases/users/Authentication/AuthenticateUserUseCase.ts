@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt'
 import { sign } from 'jsonwebtoken';
 
-import { UsersRepository } from "../../../repositories/Implementations/UsersRepository";
+import { IUsersRepository } from '../../../repositories/IUsersRepository';
 import { IAuthenticateUserDTO } from '../../../types/dto';
 
 export class AuthenticateUserUseCase {
-    constructor(private usersRepository:UsersRepository) {}
+    constructor(private usersRepository:IUsersRepository) {}
 
     async execute({email,password}:IAuthenticateUserDTO){
 
@@ -35,7 +35,7 @@ export class AuthenticateUserUseCase {
                 id: user.id,
                 name:user.name,
                 email:user.email,
-                avatar_img:user.avatar_img,
+                avatarImg:user.avatarImg,
             }
         };
     }

@@ -10,9 +10,12 @@ export class CreateProjectsUseCase {
 
     async execute({name, description,authorId,color}:ICreateProjectDTO):Promise<void>{
 
-        const userAlreadyExists = await this.projectsRepository.findByName(name);
+        const projectAlreadyExists = await this.projectsRepository.checkIfProjectExist({
+            name,
+            authorId
+        });
         
-        if (userAlreadyExists) {
+        if (projectAlreadyExists) {
             throw new Error("Project already exists");
         }
         

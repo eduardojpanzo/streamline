@@ -2,7 +2,7 @@ import { prismaClient } from "../../database/prisma";
 import { Project } from "../../model/Project";
 import { Task } from "../../model/Task";
 
-import { ICreateProjectDTO} from "../../types/dto";
+import { ICheckProjectDTO, ICreateProjectDTO} from "../../types/dto";
 import { IProjectsRepository } from "../IProjectsRepository";
 
 export class ProjectsRepository implements IProjectsRepository {
@@ -19,6 +19,27 @@ export class ProjectsRepository implements IProjectsRepository {
 
         return project
     };
+
+    async checkIfProjectExist({name,authorId}:ICheckProjectDTO):Promise<Project>{
+        const project = await prismaClient.project.findFirst({
+            where:{
+                name,
+                authorId
+            }
+        })
+
+        return project;
+    }
+
+    async deleteMany(projectId:string):Promise<Project>{
+        const project = await prismaClient.project.delete({
+            where:{
+                id:projectId
+            }
+        })
+
+        return project
+    }
 
     async findByName(name: string):Promise<Project>{
          const project = await prismaClient.project.findFirst({
@@ -48,5 +69,41 @@ export class ProjectsRepository implements IProjectsRepository {
         })
         
         return tasks;
+    }
+
+    async projectCascadingDeletes(projectId:string):Promise<void>{
+        const tasks= await prismaClient.task.deleteMany({
+            where:{
+                projectId
+            }
+        });
+
+        const projectAdmin = await prismaClient.adminProject.deleteMany({
+            where:{
+                projectId
+            }
+        });
+
+        const projectMember = await prismaClient.memberProject.deleteMany({
+            where:{
+                projectId
+            }
+        });
+
+    }
+
+    async delete(projectId:string):Promise<Project>{
+
+        const deletedProject = await prismaClient.project.delete({
+            where:{
+                id:projectId
+            }
+        })
+
+        if (!deletedProject) {
+            throw new Error("Project not exists to delete");
+        }
+
+        return deletedProject
     }
 }

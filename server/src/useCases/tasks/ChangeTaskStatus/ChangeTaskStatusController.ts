@@ -8,10 +8,8 @@ export class ChangeTaskStatusController {
     ) {}
 
     async handle(req:Request,res:Response){
-        const {taskId,nextStatus} = req.body;
+        const {taskId,nextStatus,userId} = req.body;
 
-        console.log(taskId);
-        console.log(nextStatus);
         try {
             const task = await this.changeTaskStatusUseCase.execute({
                 taskId,

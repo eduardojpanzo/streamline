@@ -18,7 +18,7 @@ export class CreateProjectsController {
             return res.status(200).send();
 
         } catch (err) {
-            return res.status(400)
+            return res.status(401)
                     .json({ message: err.message || "unexpected error" });
         }
     }

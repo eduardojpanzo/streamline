@@ -17,7 +17,10 @@ export class CreateTasksUseCase {
         userId
     }:ICreateTaskDTO):Promise<void>{
 
-        const taskAlreadyExists = await this.tasksRepository.findByName(name);
+        const taskAlreadyExists = await this.tasksRepository.checkIfTheTaskAlreadyExists({
+            name,
+            projectId
+        });
         
         if (taskAlreadyExists) {
             throw new Error("task already exists");

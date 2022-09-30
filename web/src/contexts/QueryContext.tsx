@@ -1,6 +1,6 @@
 
 import { createContext, ReactNode } from "react"
-import { api } from "../service/api";
+import { api } from "../services/api";
 import { Project, User,Task } from "../types";
 import { ICreateProjectDTO, IGhangeTaskDTO, UserAuthDTO, UserCreateDTO } from "../types/dto";
 

@@ -1,8 +1,8 @@
-import { UsersRepository } from "../../../repositories/Implementations/UsersRepository";
+import { IUsersRepository } from "../../../repositories/IUsersRepository";
 import {IGetUserDTO} from '../../../types/dto'
 
 export class RecoveryUserUseCase{
-    constructor(private usersRepository:UsersRepository){}
+    constructor(private usersRepository:IUsersRepository){}
 
     async execute(userId:string):Promise<IGetUserDTO>{
         const user = await this.usersRepository.findById(userId);
@@ -15,7 +15,7 @@ export class RecoveryUserUseCase{
             id:user.id,
             name:user.name,
             email:user.email,
-            avatar_img:user.avatar_img,
+            avatarImg:user.avatarImg,
         };
     }
 }
