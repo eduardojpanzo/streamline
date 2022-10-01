@@ -45,4 +45,28 @@ export const ModalContainer = styled.div`
     h4{
         margin-bottom: 20px;
     }
+
+    fieldset{
+        appearance: none;
+        width: 270px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px;
+        border:1px solid #ddd;
+        margin-bottom: 20px;
+
+        label{
+            display: flex;
+            align-items: center;
+            gap:2px;
+        }
+    }
+
+    select{
+        width:65%;
+        padding:4px;
+        font-size:1rem;
+        margin-bottom: 20px;
+    }
 `

@@ -3,7 +3,7 @@ import ReactModal from 'react-modal'
 import { useAuth } from '../../hooks/useAuth';
 import { useHandleQuery } from '../../hooks/useHandleQueryUser';
 import {UserAuthDTO, UserCreateDTO } from '../../types/dto';
-import {FormControlStyled, SignInContainer, SignUpContainer } from './styles'
+import {FormControlStyled, SelectorColorStyled, SignInContainer, SignUpContainer } from './styles'
 
 interface SignFormProps{
     open:boolean;
@@ -16,6 +16,10 @@ interface FormControlProps{
     type:string,
     value?:string,
     handleChange:(event:ChangeEvent<HTMLInputElement>)=>void
+}
+
+interface SelectColorProps{
+    handleChangeColor:(event:ChangeEvent<HTMLSelectElement>)=>void
 }
 
 export const SignInForm = ({open,setOpen}:SignFormProps)=>{
@@ -43,6 +47,7 @@ export const SignInForm = ({open,setOpen}:SignFormProps)=>{
 
     return(
         <ReactModal
+            appElement={document.getElementById('root') as HTMLElement}
             isOpen={open}
             onRequestClose={handleRequestCloseModal}
             style={
@@ -51,15 +56,17 @@ export const SignInForm = ({open,setOpen}:SignFormProps)=>{
         >
             <SignInContainer onSubmit={handleSubmit}>
                 <h3>Faça o login </h3>
-                <label className="formControl">
-                    <input type='email' name="email" onChange={handleChange}/>
-                    <span>Email</span>
-                </label>
+                <FormControl
+                    name='enail'
+                    type='email'
+                    handleChange={handleChange}
+                >Email</FormControl>
 
-                <label className="formControl">
-                    <input type='password' name="password" onChange={handleChange}/>
-                    <span>Senha</span>
-                </label>
+                <FormControl
+                    name='password'
+                    type='password'
+                    handleChange={handleChange}
+                >Senha</FormControl>
 
                 <button type='submit'>Log in</button>
             </SignInContainer>
@@ -100,6 +107,7 @@ export const CadastreForm = ({open,setOpen}:SignFormProps)=>{
 
     return(
         <ReactModal
+            appElement={document.getElementById('root') as HTMLElement}
             isOpen={open}
             onRequestClose={handleRequestCloseModal}
             style={
@@ -111,44 +119,39 @@ export const CadastreForm = ({open,setOpen}:SignFormProps)=>{
 
                 <div className="ghost">
                     <button className="btn_ghost">
-                        {/* <img src="./google.png"/> */}
                         Google
                     </button>
                     <button className="btn_ghost">
-                        {/* <FaFacebook/> */}
                         Facebook
                     </button>
                 </div>
 
                 <span className="or">ou</span>
 
-                <label className="formControl">
-                    <input type='text' name="name" onChange={handleChange}/>
-                    <span>Seu Nome</span>
-                </label>
+                <FormControl
+                    name='name'
+                    type='text'
+                    handleChange={handleChange}
+                >Seu Nome</FormControl>
 
-                <label className="formControl">
-                    <input type='email' name="email" onChange={handleChange}/>
-                    <span>Email</span>
-                </label>
+                <FormControl
+                    name='email'
+                    type='email'
+                    handleChange={handleChange}
+                >Email</FormControl>
 
-                <label className="formControl">
-                    <input type='password' name="password" onChange={handleChange}/>
-                    <span>Senha</span>
-                </label>
 
-                <label className="formControl">
-                    <input type='password' name="confirmPassword" onChange={handleChange}/>
-                    <span></span>
-                </label>
+                <FormControl
+                    name='password'
+                    type='password'
+                    handleChange={handleChange}
+                >Senha</FormControl>
 
                 <FormControl
                     name='confirmPassword'
                     type='password'
                     handleChange={handleChange}
-                >
-                    Confirmar senha
-                </FormControl>
+                >Confirmar senha</FormControl>
 
                 <button type='submit'>Cadastrar</button>
             </SignUpContainer>
@@ -162,5 +165,20 @@ export const FormControl = ({children,name,type,handleChange,value}:FormControlP
             <input type={type} name={name} onChange={handleChange} value={value}/>
             <span>{children}</span>
         </FormControlStyled>
+    )
+}
+
+export const SelectColor = ({handleChangeColor}:SelectColorProps)=>{
+    return(
+    <SelectorColorStyled htmlFor="color">
+        <span>Escolha uma Cor</span>
+        <select name="color" id="color" onChange={handleChangeColor}>
+            <option disabled>Escolha uma cor</option>
+            <option value="#1237bc">Violeta</option>
+            <option value="#10ad32">Verde</option>
+            <option value="#b12020">Vermelho</option>
+            <option value="#787878">Cinza</option>
+        </select>
+    </SelectorColorStyled>
     )
 }

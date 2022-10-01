@@ -14,6 +14,7 @@ type BoardContextTypes = {
     changeTaskStatus:(changeData:IGhangeTaskDTO)=>Promise<Task>
     isFetching:boolean
     data: Task[] | undefined
+    projectId:string | undefined
 }
 
 export const BoardContext = createContext<BoardContextTypes>({} as BoardContextTypes)
@@ -25,8 +26,6 @@ export function BoardContextProvider({children}:BoardContextProviderProps) {
     const {data,isFetching} = useQuery('projectData',async ()=>{
         const tasks = await handleGetProjectTasks(projectId!);
         return tasks;
-    },{
-        staleTime:1000// 1seg */
     })
 
     const changeTaskStatus = async (changeData:IGhangeTaskDTO)=>{
@@ -37,7 +36,7 @@ export function BoardContextProvider({children}:BoardContextProviderProps) {
     }
 
     return ( 
-        <BoardContext.Provider value={{changeTaskStatus,data, isFetching}}>
+        <BoardContext.Provider value={{changeTaskStatus,data, isFetching,projectId}}>
             {children}
         </BoardContext.Provider>
      );

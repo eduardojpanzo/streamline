@@ -13,14 +13,17 @@ export type UserAuthDTO = {
 export interface ICreateProjectDTO {
     name:string
     description:string
+    color:string
     authorId: string
     created_at?:Date
 }
 
 export interface ICreateTaskDTO {
+    userId:string
     name:string
     description:string
     status:string
+    color:string
     projectId: string
     created_at?:Date
 }

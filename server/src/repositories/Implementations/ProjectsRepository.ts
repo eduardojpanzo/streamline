@@ -71,27 +71,6 @@ export class ProjectsRepository implements IProjectsRepository {
         return tasks;
     }
 
-    async projectCascadingDeletes(projectId:string):Promise<void>{
-        const tasks= await prismaClient.task.deleteMany({
-            where:{
-                projectId
-            }
-        });
-
-        const projectAdmin = await prismaClient.adminProject.deleteMany({
-            where:{
-                projectId
-            }
-        });
-
-        const projectMember = await prismaClient.memberProject.deleteMany({
-            where:{
-                projectId
-            }
-        });
-
-    }
-
     async delete(projectId:string):Promise<Project>{
 
         const deletedProject = await prismaClient.project.delete({

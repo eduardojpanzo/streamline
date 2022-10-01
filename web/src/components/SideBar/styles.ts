@@ -22,14 +22,18 @@ export const MenuVertical = styled.nav`
         gap:10px;
 
         a{
-            display: block;
+            display: flex;
+            align-items: center;
+            gap:10px;
             width: 100%;
-            padding:2px 10px;
+            padding:5px 10px;
             border-radius:100px;
+            font-size:1rem;
             text-decoration:none;
             color:var(--gray-800);
+            transition: all ease .2s;
 
-            &.active{
+            &:hover{
                 background:var(--transparent);
             }
         }

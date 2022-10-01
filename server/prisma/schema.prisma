@@ -29,7 +29,7 @@ model Project {
   id          String   @id      @unique @default(uuid())
   name        String
   description String
-  color       String
+  color       String  @default("#1237bc")
   createdAt  DateTime? @default(now())
 
   Task Task[]
@@ -46,8 +46,8 @@ model Task {
   id           String @id @unique @default(uuid())
   name         String
   description  String
-  color        String
-  status       String  //todo;  process;  stoped; done
+  color        String  @default("#1237bc")
+  status       String  @default("todo")//todo;  process;  stoped; done
   createdAt   DateTime? @default(now())
 
   HolderTask HolderTask[]

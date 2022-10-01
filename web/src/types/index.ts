@@ -16,6 +16,7 @@ export interface Project {
     id:string,
     name:string,
     description:string,
+    color:string;
     authorId: string,
     created_at?:Date
 }
@@ -31,6 +32,7 @@ export type Task = {
     id:string,
     name:string,
     description:string,
+    color:string,
     status:string,
     projectId: string,
     created_at?:Date

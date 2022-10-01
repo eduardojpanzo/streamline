@@ -216,3 +216,17 @@ export const Button = styled.button`
     font-weight: 600;
     transition-duration: 0.3s;
 `
+
+export const SelectorColorStyled = styled.label`
+
+    span{
+        margin-bottom: 10px;
+    }
+
+    select{
+        width:65%;
+        padding:4px;
+        font-size:1rem;
+        margin-bottom: 20px;
+    }
+`

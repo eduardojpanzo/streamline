@@ -2,7 +2,7 @@
 import { createContext, ReactNode } from "react"
 import { api } from "../services/api";
 import { Project, User,Task } from "../types";
-import { ICreateProjectDTO, IGhangeTaskDTO, UserAuthDTO, UserCreateDTO } from "../types/dto";
+import { ICreateProjectDTO, ICreateTaskDTO, IGhangeTaskDTO, UserAuthDTO, UserCreateDTO } from "../types/dto";
 
 type QueryContextType ={
     handleCreateAccount:(userInfo:UserCreateDTO)=>Promise<any>
@@ -12,6 +12,7 @@ type QueryContextType ={
     handleCreateProject:(project:ICreateProjectDTO)=>Promise<void>;
     handleGetProjectTasks:(projectId:string)=>Promise<Task[]>;
     handleChangeTaskStatus:(changeData:IGhangeTaskDTO)=>Promise<Task>;
+    handleCreateTask:(reateData:ICreateTaskDTO)=>Promise<any>
 }
 
 interface QueryContextProviderProps{
@@ -78,8 +79,15 @@ export function QueryContextProvider({children}:QueryContextProviderProps){
         return tasks;
     }
 
-    const handleChangeTaskStatus = async (changeProps:IGhangeTaskDTO)=>{
-        const res = await api.put(`/tasks/change`,changeProps);
+    const handleChangeTaskStatus = async (changeData:IGhangeTaskDTO)=>{
+        const res = await api.put(`/tasks/change`,changeData);
+        const task = await res.data;
+
+        return task;
+    }
+
+    const handleCreateTask = async (createData:ICreateTaskDTO)=>{
+        const res = await api.post(`/tasks`,createData);
         const task = await res.data;
 
         return task;
@@ -93,7 +101,8 @@ export function QueryContextProvider({children}:QueryContextProviderProps){
             handleGetUserProjects,
             handleCreateProject,
             handleGetProjectTasks,
-            handleChangeTaskStatus
+            handleChangeTaskStatus,
+            handleCreateTask
         }}>
             {children}
         </QueryContext.Provider>

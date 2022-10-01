@@ -2,6 +2,8 @@ import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { MdAdd } from 'react-icons/md';
 import {Link} from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth';
+import avatar from "../../assets/avatar.png";
 
 import {Project, Task } from '../../types';
 import { 
@@ -23,6 +25,7 @@ interface CardAddNewProjectProps{
 
 export const CardTask= ({data,index,list}:CardTaskProps) => {
   const ref = useRef<HTMLDivElement>(null);
+  const {user} = useAuth()
 
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: 'TASK_CARD',
@@ -38,12 +41,12 @@ export const CardTask= ({data,index,list}:CardTaskProps) => {
     <div ref={dragPreview} style={{ opacity: isDragging ? 0.5 : 1}}>
       <ContainerTask role='Handle' ref={ref}>
         <header>
-          <Label color={'#1237bc'}/>
+          <Label color={data.color}/>
           <h3>{data.name}</h3>
         </header>
         <p>{data.description}</p>
         <div>
-          <img src={`https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/profile.png`} alt={``} />
+          <img src={user?.avatar_img?user.avatar_img:avatar} alt={``} />
           <button><MdAdd/></button>
         </div>
     </ContainerTask>
@@ -56,15 +59,15 @@ export const CardProject = ({data}:{data:Project})=>{
 
   }
   return(
-    <ContainerCardProject onClick={handleOpenProject} color="#2238ff">
+    <ContainerCardProject onClick={handleOpenProject} color={data.color}>
       <header>
         {data.name}
       </header>
       <section>
         <p>{data.description}</p>
         <div>
-          <span>{`${data?.created_at}`}</span>
-          <Link to={`boardTask/${data.id}`}>Go to Tasks</Link>
+          <span></span>
+          <Link to={`/boardTask/${data.id}`}>Go to Tasks</Link>
         </div>
       </section>
     </ContainerCardProject>

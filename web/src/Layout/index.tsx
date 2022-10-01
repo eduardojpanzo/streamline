@@ -2,6 +2,7 @@ import {Routes,Route} from 'react-router-dom'
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 
+import { Home } from '../pages/home';
 import { Board } from '../components/Board';
 import { Header } from '../components/Header';
 import { Outset } from '../components/Outset';
@@ -16,7 +17,7 @@ export const Layout: React.FC = () => {
         <section>
             <Header/>
             <Routes>
-              <Route path='/' element={<Outset/>}/>
+              <Route path='/projects' element={<Outset/>}/>
               <Route path='/boardTask/:projectId' element={
                 <DndProvider backend={HTML5Backend}>
                   <BoardContextProvider>
@@ -24,6 +25,7 @@ export const Layout: React.FC = () => {
                   </BoardContextProvider>
                 </DndProvider>
               }/>
+              <Route path='*' element={<Home/>}/>
             </Routes>
         </section>
     </Container>

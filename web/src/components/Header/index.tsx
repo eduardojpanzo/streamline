@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { CadastreForm, SignInForm } from '../FormElement';
 import { Container } from './styles';
@@ -12,6 +12,11 @@ export function Header() {
   function handleLogOut() {
     logout()
   }
+
+  const today = Date.now();
+
+  const dateFormat = new Intl.DateTimeFormat('pt-PT', {month: 'long',day: '2-digit'}).format(today);
+  const HourFormat = new Intl.DateTimeFormat('pt-PT', {hour: '2-digit', minute: '2-digit'}).format(today);
 
   return (
     <Container>
@@ -35,8 +40,8 @@ export function Header() {
         }
 
         <div className='timeDate'>
-          <p>17:30</p>
-          <span>18 August</span>
+          <p>{HourFormat}</p>
+          <span>{dateFormat}</span>
         </div>
       </div>
       <SignInForm open={openSignIn} setOpen={setOpenSignIn}/>
