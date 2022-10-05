@@ -4,8 +4,8 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { Outset } from "./components/Outset";
 import { BoardContextProvider } from "./contexts/BoardContext";
 import { Board } from "./components/Board";
-import { Home } from "./pages/home";
-import { Project } from "./pages/project";
+import { Home } from "./pages/Home";
+import ProjectPage from "./pages/Project";
 
  
 export const RoutesComponent = () => {
@@ -19,7 +19,7 @@ export const RoutesComponent = () => {
                   </BoardContextProvider>
                 </DndProvider>
               }/>
-              <Route path="projects/:projectId" element={<Project/>}/>
+              <Route path="projects/:projectId" element={<ProjectPage/>}/>
               <Route path='*' element={<Home/>}/>
         </Routes>
      );

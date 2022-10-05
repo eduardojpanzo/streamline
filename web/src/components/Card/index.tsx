@@ -1,17 +1,19 @@
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { MdAdd } from 'react-icons/md';
+import { MdAdd, MdDelete, MdTimeToLeave } from 'react-icons/md';
 import {Link} from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth';
 import avatar from "../../assets/avatar.png";
 
-import {Project, Task } from '../../types';
+import {Project, Task, UserType } from '../../types';
 import { 
   ContainerTask, 
   ContainerCardAddNew, 
   ContainerCardProject, 
-  Label 
+  Label, 
+  UserItem
 } from './styles';
+import { Button } from '../FormElement/styles';
 
 interface CardTaskProps{
   data:Task;
@@ -21,6 +23,11 @@ interface CardTaskProps{
 
 interface CardAddNewProjectProps{
   handleClick:()=>void;
+}
+
+interface UserProps{
+  data: UserType
+  type:string
 }
 
 export const CardTask= ({data,index,list}:CardTaskProps) => {
@@ -46,33 +53,31 @@ export const CardTask= ({data,index,list}:CardTaskProps) => {
         </header>
         <p>{data.description}</p>
         <div>
-          <img src={user?.avatar_img?user.avatar_img:avatar} alt={``} />
+          <img src={user?.avatarImg?user.avatarImg:avatar} alt={``} />
           <button><MdAdd/></button>
         </div>
+        <i><MdDelete/></i>
     </ContainerTask>
     </div>
   );
 }
 
 export const CardProject = ({data}:{data:Project})=>{
-  const handleOpenProject = ()=>{
-
-  }
 
   const HourFormat = new Intl.DateTimeFormat(
     'pt-PT',
     {month:'long',day:'2-digit'}
-  ).format(data.created_at);
+  ).format(Date.now());
 
   return(
-    <ContainerCardProject onClick={handleOpenProject} color={data.color}>
+    <ContainerCardProject color={data.color}>
       <header>
         {data.name}
       </header>
       <section>
         <p>{data.description}</p>
         <div>
-          <span>{HourFormat}</span>
+          <span>{`${data.createdAt}`}</span>
           <div className='links'>
             <Link to={`/boardTask/${data.id}`}>Go to Tasks</Link>
             <Link to={`/projects/${data.id}`}>View Project</Link>
@@ -88,5 +93,21 @@ export function CardAddNewProject({handleClick}:CardAddNewProjectProps){
       <ContainerCardAddNew className={`addNew`} onClick={handleClick}>
         Adicionar Novo Projecto
       </ContainerCardAddNew>
+  )
+}
+
+export const UserCard = ({data, type}:UserProps)=>{
+  return(
+  <UserItem>
+      <div className={`avatar`}>
+          <img src={data.avatarImg} alt={data.name} />
+      </div>
+      <div className={`name`}>
+          <p>{data.name}</p>
+      </div>
+      <div className="btn">
+          <Button>{type}</Button>
+      </div>
+  </UserItem>
   )
 }

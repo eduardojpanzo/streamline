@@ -7,7 +7,7 @@ type User = {
     id: string,
     name:string,
     email:string,
-    avatar_img:string,
+    avatarImg:string,
 }
 
 type AuthContextType = {

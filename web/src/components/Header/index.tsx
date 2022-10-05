@@ -1,16 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { CadastreForm, SignInForm } from '../FormElement';
 import { Container } from './styles';
 
 export function Header() {
   const {user,logout} = useAuth()
+  const navigate = useNavigate()
 
   const [openSignIn, setOpenSignIn] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
 
   function handleLogOut() {
-    logout()
+    logout();
+
+    navigate("/")
   }
 
   const today = Date.now();

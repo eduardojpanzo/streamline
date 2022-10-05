@@ -30,6 +30,7 @@ export const List = ({tasks,done,creatable,title, list}:ListProps) => {
 
   const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
       setData({...data,[e.target.name]:e.target.value})
+      
   }
 
   const handleChangeColor = (e:ChangeEvent<HTMLSelectElement>)=>{
@@ -50,26 +51,6 @@ export const List = ({tasks,done,creatable,title, list}:ListProps) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: 'TASK_CARD',
     hover(item:DragItemtype, monitor) {
-      /*const taskId = item.id;
-      const draggedList = item.list
-      const targetList = list;
-      
-      if (targetList === draggedList) {
-        return
-      }
-
-      if (user) {
-        (async ()=>{
-          const task = await changeTaskStatus({
-            nextStatus: targetList,
-            taskId,
-            userId: user.id
-          })
-  
-          console.log(task);
-        })()
-      }*/
-
     },
     collect: (monitor) => ({
       isOver: monitor.isOver()
@@ -91,7 +72,6 @@ export const List = ({tasks,done,creatable,title, list}:ListProps) => {
             userId: user.id
           })
   
-          console.log(task);
           alert("Feito")
         })()
       }
@@ -115,6 +95,7 @@ export const List = ({tasks,done,creatable,title, list}:ListProps) => {
       </ul>
 
       <ReactModal
+          appElement={document.getElementById('root') as HTMLElement}
          isOpen={openModal}
          onRequestClose={()=>setOpenModal(false)}
          style={

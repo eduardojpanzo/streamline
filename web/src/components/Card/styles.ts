@@ -10,6 +10,19 @@ export const ContainerTask = styled.div`
     border-top:20px solid rgba(230,236,245,0.4);
     cursor: grab;
 
+    i{
+        font-size:1.15rem;
+        position:absolute;
+        top: -20px;
+        right:5px;
+        cursor: pointer;
+        
+        &:hover{
+            color: var(--red-500);
+        }
+    }
+    
+
     header{
         position:absolute;
         top: -32px;
@@ -138,3 +151,41 @@ export const ContainerCardAddNew = styled.div`
         filter:brightness(0.8);
     }
 ` 
+
+export const UserItem = styled.div`
+    position: relative;
+    padding: .7rem;
+    border-radius: 8px;
+    border:1px solid #0001;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .avatar{
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+        border: 1px solid var(--gray-100);
+        overflow: hidden;
+
+        img{
+            object-fit: cover;
+        }
+    }
+    .name{
+        p{
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+        span{
+            font-style: italic;
+        }
+    }
+    .btn{
+        flex:1;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+`

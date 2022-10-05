@@ -8,13 +8,13 @@ export class BecomeTaskHolderController {
 
 
     async handle(req:Request,res:Response){
-        const {userId,id,taskId} = req.body
+        const {userId,email,taskId} = req.body
 
         try {
             const taskHolderCreated = await this.becomeTaskHolderUseCase.execute({
                 userId,
                 taskId,
-                id
+                email
             })
 
             return res.status(200).json(taskHolderCreated);

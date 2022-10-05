@@ -75,7 +75,6 @@ export const SignInForm = ({open,setOpen}:SignFormProps)=>{
     )
 }
 
-
 export const CadastreForm = ({open,setOpen}:SignFormProps)=>{
     const {handleCreateAccount} = useHandleQuery();
     const [userInfo,setUserInfo] = useState<UserCreateDTO>({} as UserCreateDTO);

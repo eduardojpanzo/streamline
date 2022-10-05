@@ -26,6 +26,8 @@ export default createGlobalStyle`
         --transparent-white: rgba(255, 255, 255, 0.7);
         --transparent-black: rgba(0, 0, 0, 0.7);
         --transparent: #ecf1f0;
+
+        --red-500: #e74c3c;
     }
 
     html,border-style,#root{

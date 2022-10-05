@@ -6,7 +6,7 @@ export const Container = styled.div`
         h3{
             text-align:center;
             font-size:1.6rem;
-            font-weight:500;
+            font-weight:700;
             margin-bottom: 15px;;
         }
         p{
@@ -41,40 +41,58 @@ export const UsersField = styled.div`
     gap: 5px;
 `
 
-export const UserItem = styled.div`
-    position: relative;
-    padding: .7rem;
-    border-radius: 8px;
-    border:1px solid #0001;
-
+export const NewUser = styled.form`
+    max-width: 425px;
+    width: 90%;
+    margin: 2rem auto 0;
+    
     display: flex;
-    align-items: center;
-    gap: 15px;
+    flex-direction: column;
+    gap: 5px;
 
-    .avatar{
-        width: 50px;
-        height: 50px;
-        border-radius: 50px;
-        border: 1px solid var(--gray-100);
-        overflow: hidden;
-
-        img{
-            object-fit: cover;
-        }
+    &>p{
+        font-weight:600;
+        font-size:1.5rem;
     }
-    .name{
-        p{
-            font-size: 1.2rem;
-            font-weight: 800;
-        }
-        span{
-            font-style: italic;
-        }
-    }
-    .btn{
-        flex:1;
+    
+    fieldset{
+        width: 100%;
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-evenly;
+        align-items: center;
+        
+        font-size:1.2rem;
+        padding: 10px;
+        border: none;
+        margin: 10px 0;
+
+        label{
+            font-weight:500;
+            display: flex;
+            align-items: center;
+            gap:2px;
+        }
     }
 
+`
+
+export const DeleteProject = styled.form`
+    max-width: 425px;
+    width: 90%;
+    margin: 4rem auto 0.5rem;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    padding: 10px;
+    border:1px solid var(--red-500);
+    border-radius:4px;
+    color: var(--red-500);
+
+    button{
+        border:1px solid var(--red-500);
+        background: transparent;
+        color: var(--red-500);
+    }
 `

@@ -1,16 +1,20 @@
 import { UserProject } from "../../../model/UserProject";
 import { IUsersProjectsRepository } from "../../../repositories/IUsersProjectsRepository";
+import { IUsersRepository } from "../../../repositories/IUsersRepository";
 import { IBecomeAdminDTO } from "../../../types/dto";
 
 export class BecomeAdminUseCase{
     constructor(
-        private usersProjectsRepository: IUsersProjectsRepository
+        private usersProjectsRepository: IUsersProjectsRepository,
+        private usersRepository: IUsersRepository
     ){}
 
-    async execute({userId,id,projectId}:IBecomeAdminDTO):Promise<UserProject>{
+    async execute({userId,email,projectId}:IBecomeAdminDTO):Promise<UserProject>{
+
+        const user = await this.usersRepository.findByEmail(email);
         
         const isNewIdAdmin = await this.usersProjectsRepository.checkIfIsAdminProject({
-            userId: id,
+            userId: user.id,
             projectId
         })
 
@@ -19,7 +23,7 @@ export class BecomeAdminUseCase{
         }
 
         const newAdmincreated = await this.usersProjectsRepository.setProjectAdmin({
-            userId:id,
+            userId:user.id,
             projectId
         })
 

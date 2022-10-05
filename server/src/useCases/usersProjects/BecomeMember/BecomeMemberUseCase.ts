@@ -1,16 +1,19 @@
 import { UserProject } from "../../../model/UserProject";
 import { IUsersProjectsRepository } from "../../../repositories/IUsersProjectsRepository";
+import { IUsersRepository } from "../../../repositories/IUsersRepository";
 import { IBecomeMemberDTO } from "../../../types/dto";
 
 export class BecomeMemberUseCase{
     constructor(
-        private usersProjectsRepository: IUsersProjectsRepository
+        private usersProjectsRepository: IUsersProjectsRepository,
+        private usersRepository: IUsersRepository
     ){}
 
-    async execute({userId,id,projectId}:IBecomeMemberDTO):Promise<UserProject>{
-        
+    async execute({userId,email,projectId}:IBecomeMemberDTO):Promise<UserProject>{
+        const user = await this.usersRepository.findByEmail(email);
+
         const isNewIdMember = await this.usersProjectsRepository.checkIfIsProjectMember({
-            userId: id,
+            userId: user.id,
             projectId
         })
 
@@ -19,7 +22,7 @@ export class BecomeMemberUseCase{
         }
 
         const newMembercreated = await this.usersProjectsRepository.setProjectMember({
-            userId:id,
+            userId:user.id,
             projectId
         })
 

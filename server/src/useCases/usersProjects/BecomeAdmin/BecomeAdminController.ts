@@ -9,13 +9,13 @@ export class BecomeAdminController {
 
 
     async handle(req:Request,res:Response){
-        const {userId,projectId,id} = req.body
+        const {userId,email,projectId} = req.body
 
         try {
             const newAdmincreated = await this.becomeAdminUseCase.execute({
                 userId,
                 projectId,
-                id
+                email
             })
 
             return res.status(200).json(newAdmincreated);

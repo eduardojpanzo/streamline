@@ -65,18 +65,18 @@ export interface IGhangeTaskDTO {
 
 export interface IBecomeAdminDTO {
     userId: string,
-    id:string,
+    email:string,
     projectId:string,
 }
 
 export interface IBecomeMemberDTO {
     userId: string,
-    id:string,
+    email:string,
     projectId:string,
 }
 
 export interface IBecomeTaskHolderDTO {
     userId: string,
-    id:string,
+    email:string,
     taskId:string,
 }

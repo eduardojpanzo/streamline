@@ -1,16 +1,19 @@
 import { UserTask } from "../../../model/UserTask";
+import { IUsersRepository } from "../../../repositories/IUsersRepository";
 import { IUsersTasksRepository } from "../../../repositories/IUsersTasksRepository";
 import {  IBecomeTaskHolderDTO } from "../../../types/dto";
 
 export class BecomeTaskHolderUseCase{
     constructor(
-        private usersTasksRepository: IUsersTasksRepository
+        private usersTasksRepository: IUsersTasksRepository,
+        private usersRepository: IUsersRepository
     ){}
 
-    async execute({userId,id,taskId}:IBecomeTaskHolderDTO):Promise<UserTask>{
+    async execute({userId,email,taskId}:IBecomeTaskHolderDTO):Promise<UserTask>{
+        const user = await this.usersRepository.findByEmail(email);
         
         const isNewIdTaskHolder = await this.usersTasksRepository.checkIfIsTaskHolder({
-            userId: id,
+            userId: user.id,
             taskId
         })
 
@@ -19,7 +22,7 @@ export class BecomeTaskHolderUseCase{
         }
 
         const taskHolderCreated = await this.usersTasksRepository.setTaskHolder({
-            userId:id,
+            userId:user.id,
             taskId
         })
 
