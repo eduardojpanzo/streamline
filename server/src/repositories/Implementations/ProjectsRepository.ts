@@ -1,11 +1,14 @@
 import { prismaClient } from "../../database/prisma";
 import { Project } from "../../model/Project";
 import { Task } from "../../model/Task";
+import { ProjectInfo } from "../../types";
 
 import { ICheckProjectDTO, ICreateProjectDTO} from "../../types/dto";
 import { IProjectsRepository } from "../IProjectsRepository";
+import { UsersProjectsRepository } from "./UsersProjectsRepository";
 
 export class ProjectsRepository implements IProjectsRepository {
+    private usersProjectsRepository = new UsersProjectsRepository()
 
     async create({name,description,authorId,color}:ICreateProjectDTO):Promise<Project>{
         const project = await prismaClient.project.create({
@@ -51,14 +54,17 @@ export class ProjectsRepository implements IProjectsRepository {
          return project;
     };
 
-    async findById(id: string):Promise<Project>{
+    async findById(id: string):Promise<ProjectInfo>{
          const project = await prismaClient.project.findFirst({
             where:{
                 id
             }
          })
 
-         return project;
+         const users = await this.usersProjectsRepository.getProjectUsers(id);
+         const tasks = await this.getProjectTasks(id);
+
+         return {project,users,tasks}
     };
 
     async getProjectTasks(projectId: string):Promise<Task[]>{

@@ -1,5 +1,6 @@
 import { prismaClient } from "../../database/prisma";
 import { UserProject } from "../../model/UserProject";
+import { ProjectUsers, UserProjects } from "../../types";
 import { IMemberProjectDTO, ISetAdminDTO } from "../../types/dto";
 import { IUsersProjectsRepository } from "../IUsersProjectsRepository";
 
@@ -7,6 +8,17 @@ export class UsersProjectsRepository implements IUsersProjectsRepository {
 
     async setProjectAdmin({userId,projectId}:ISetAdminDTO):Promise<UserProject>{
         const userProject = await prismaClient.adminProject.create({
+            data:{
+                userId,
+                projectId
+            }
+        })
+        
+        return userProject;
+    }
+
+    async setProjectMember({userId,projectId}: IMemberProjectDTO):Promise<UserProject>{
+        const userProject = await prismaClient.memberProject.create({
             data:{
                 userId,
                 projectId
@@ -27,17 +39,6 @@ export class UsersProjectsRepository implements IUsersProjectsRepository {
         return userProject
     }
 
-    async setProjectMember({userId,projectId}: IMemberProjectDTO):Promise<UserProject>{
-        const userProject = await prismaClient.memberProject.create({
-            data:{
-                userId,
-                projectId
-            }
-        })
-        
-        return userProject;
-    }
-
     async checkIfIsProjectMember({userId,projectId}: ISetAdminDTO):Promise<UserProject>{
         const userProject = await prismaClient.memberProject.findFirst({
             where:{
@@ -49,15 +50,62 @@ export class UsersProjectsRepository implements IUsersProjectsRepository {
         return userProject
     }
 
-    //buscar todos os projectos de um user onde ele é admin
+    async getUserProjects(userId:string):Promise<UserProjects>{
+        const adminProjects = await prismaClient.project.findMany({
+            where:{
+                AdminProject:{
+                    some:{
+                        userId
+                    }
+                }
+            }
+        })
 
+        const othersProjects = await prismaClient.project.findMany({
+            where:{
+                MemberProject:{
+                    some:{
+                        userId
+                    }
+                }
+            }
+        })
 
-    //buscar admins de Projecoto
+        return {adminProjects,othersProjects}
+    }
 
-    
-    
-    //buscar todos os projectos de um user onde ele é member
-    
-    
-    //buscar members de um projecto
+    async getProjectUsers(projectId:string):Promise<ProjectUsers>{
+        const admins = await prismaClient.user.findMany({
+            where:{
+                AdminProject:{
+                    some:{
+                        projectId
+                    }
+                }
+            },select:{
+                id:true,
+                name:true,
+                email:true,
+                avatarImg:true
+            }
+        })
+
+        const members = await prismaClient.user.findMany({
+            where:{
+                MemberProject:{
+                    some:{
+                        projectId
+                    }
+                }
+            },
+            select:{
+                id:true,
+                name:true,
+                email:true,
+                avatarImg:true
+            }
+        })
+
+        return {admins,members}
+    }    
 }

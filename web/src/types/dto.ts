@@ -15,7 +15,7 @@ export interface ICreateProjectDTO {
     description:string
     color:string
     authorId: string
-    created_at?:Date
+    createdAt?:Date
 }
 
 export interface ICreateTaskDTO {
@@ -25,7 +25,7 @@ export interface ICreateTaskDTO {
     status:string
     color:string
     projectId: string
-    created_at?:Date
+    createdAt?:Date
 }
 
 export interface IGhangeTaskDTO {

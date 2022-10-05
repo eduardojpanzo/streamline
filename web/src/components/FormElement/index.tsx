@@ -29,15 +29,16 @@ export const SignInForm = ({open,setOpen}:SignFormProps)=>{
     const handleRequestCloseModal = ()=>{
         setOpen(false)
     }
+
     const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
         setUserInfo({...userInfo,[e.target.name]:e.target.value})
     }
-    const handleSubmit = async (e:FormEvent)=>{
+
+    const handleLogIn = async (e:FormEvent)=>{
         e.preventDefault();
         
         try {
             await signIn(userInfo);
-            
             handleRequestCloseModal()
         } catch (error) {
             alert(error)
@@ -54,10 +55,10 @@ export const SignInForm = ({open,setOpen}:SignFormProps)=>{
                 {content:{height:"max-content",width:"max-content",margin:"0 auto"}}
             }
         >
-            <SignInContainer onSubmit={handleSubmit}>
+            <SignInContainer onSubmit={handleLogIn}>
                 <h3>Faça o login </h3>
                 <FormControl
-                    name='enail'
+                    name='email'
                     type='email'
                     handleChange={handleChange}
                 >Email</FormControl>

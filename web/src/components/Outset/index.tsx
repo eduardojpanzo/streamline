@@ -1,18 +1,19 @@
 import { useState,useEffect, ChangeEvent,FormEvent} from 'react';
 import ReactModal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { useAuth } from '../../hooks/useAuth';
 import { useHandleQuery } from '../../hooks/useHandleQueryUser';
 
-import { Project } from '../../types';
+import { Projects } from '../../types';
 import { ICreateProjectDTO } from '../../types/dto';
 
 import { CardAddNewProject, CardProject } from '../Card';
 import { FormControl, SelectColor } from '../FormElement';
 
 import { Button } from '../FormElement/styles';
-import { Container, ModalContainer } from './styles';
+import { Container, ModalContainer, ProjectContent } from './styles';
 
 export const Outset: React.FC = () => {
   const {user} = useAuth();
@@ -20,7 +21,7 @@ export const Outset: React.FC = () => {
   const {handleGetUserProjects, handleCreateProject} = useHandleQuery()
 
   const [openModal, setOpenModal] = useState(false);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Projects>();
   const [data,setData] = useState<ICreateProjectDTO>({} as ICreateProjectDTO);
 
   
@@ -55,16 +56,36 @@ export const Outset: React.FC = () => {
     if (user) {
       await handleCreateProject({...data,authorId:user.id});
       
-      alert("Projecto Criado!");
+      toast.success('Projecto Criado !', {
+        position: toast.POSITION.TOP_RIGHT,
+        delay:50
+      });
+      
+      const projects = await handleGetUserProjects(user.id)
+
+      setProjects(projects);
+
+      handleRequestCloseModal()
     }
   }
 
   return(
     <Container>
         <CardAddNewProject handleClick={()=>setOpenModal(true)}/>
-        {projects.length>0 && (projects.map(project=>
+
+        <h4>Projectos em que és Administrador</h4>
+        <ProjectContent>
+          {projects && (projects.adminProjects.map(project=>
+              <CardProject key={project.id} data={project}/>
+          ))}
+        </ProjectContent>
+
+        <h4>Pojectos em que participas</h4>
+        <ProjectContent>
+          {projects && (projects.othersProjects.map(project=>
             <CardProject key={project.id} data={project}/>
-        ))}
+          ))}
+        </ProjectContent>
         
         <ReactModal
         appElement={document.getElementById('root') as HTMLElement}

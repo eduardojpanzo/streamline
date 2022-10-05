@@ -5,7 +5,7 @@ export class User {
 
   public email: string;
   public name: string;
-  public password: string;
+  public password?: string;
   public avatarImg: string;
 
   constructor(props: Omit<User, "id">, id?: string) {

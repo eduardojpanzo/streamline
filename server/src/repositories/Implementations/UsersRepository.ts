@@ -12,6 +12,12 @@ export class UsersRepository implements IUsersRepository {
         const user = await prismaClient.user.findFirst({
             where:{
                 id
+            },
+            select:{
+                id:true,
+                name:true,
+                avatarImg:true,
+                email:true
             }
         })
         
@@ -22,11 +28,17 @@ export class UsersRepository implements IUsersRepository {
          const user = await prismaClient.user.findFirst({
             where:{
                 email
+            },
+            select:{
+                id:true,
+                name:true,
+                avatarImg:true,
+                email:true
             }
          })
 
          return user;
-    } ;
+    };
     
     async create({email,name,password}:ICreateUserDTO):Promise<User>{
         const hashPassword = await bcrypt.hash(password, 10)
@@ -36,11 +48,27 @@ export class UsersRepository implements IUsersRepository {
                 email,
                 name,
                 password:hashPassword
+            },
+            select:{
+                id:true,
+                name:true,
+                avatarImg:true,
+                email:true
             }
         })
 
         return user
     };
+
+    async getUser(email: string):Promise<User>{
+        const user = await prismaClient.user.findFirst({
+           where:{
+               email
+           }
+        })
+
+        return user;
+   } ;
 
     async getUserProjects(authorId: string):Promise<Project[]>{
         const projects = await prismaClient.project.findMany({

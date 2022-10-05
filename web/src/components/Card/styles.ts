@@ -96,6 +96,12 @@ export const ContainerCardProject = styled.div`
             margin-bottom: 3px;
         }
 
+        .links{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
         a{
             display: inline-block;
             padding: 0.3rem;
@@ -115,7 +121,7 @@ export const ContainerCardProject = styled.div`
 export const ContainerCardAddNew = styled.div`
     position: relative;
     width: 230px;
-    height: 180px;
+    height: 60px;
     background: var(--gray-100);
     border-radius:8px;
     border:1px solid var(--violet-500);

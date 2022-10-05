@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { FindProjectFromNameUseCase } from "./FindProjectFromNameUseCase";
+import { FindProjectFromIdUseCase } from "./FindProjectFromIdUseCase";
 
-export class FindProjectFromNameController{
-    constructor(private findProjectFromNameUseCase:FindProjectFromNameUseCase){}
+export class FindProjectFromIdController{
+    constructor(private findProjectFromIdUseCase:FindProjectFromIdUseCase){}
     
     async handle (req:Request,res:Response){
-        const {name} = req.params;
+        const {projectId} = req.params;
 
         try {
-            const project = await this.findProjectFromNameUseCase.execute(name);
+            const project = await this.findProjectFromIdUseCase.execute(projectId);
             return res.status(200).send(project);
 
           } catch (err) {

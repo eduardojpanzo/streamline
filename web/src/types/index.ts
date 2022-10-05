@@ -18,14 +18,30 @@ export interface Project {
     description:string,
     color:string;
     authorId: string,
-    created_at?:Date
+    createdAt?:Date
 }
 
-export type User = {
+export interface Projects{
+    adminProjects:Project[],
+    othersProjects:Project[]
+}
+
+export type UserType = {
     id:string,
     email:string,
     name:string,
-    avatar_img:string
+    avatarImg:string
+}
+
+export type ProjectUsers = {
+    admins:UserType[],
+    members:UserType[]
+}
+
+export type ProjectInfo = {
+    project:Project,
+    users:ProjectUsers,
+    tasks:Task[]
 }
 
 export type Task = {
@@ -35,7 +51,7 @@ export type Task = {
     color:string,
     status:string,
     projectId: string,
-    created_at?:Date
+    createdAt?:Date
 }
 
 export type ProjectDataType = {

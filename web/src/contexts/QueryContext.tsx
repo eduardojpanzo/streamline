@@ -1,14 +1,14 @@
 
 import { createContext, ReactNode } from "react"
 import { api } from "../services/api";
-import { Project, User,Task } from "../types";
+import { Project, User,Task, Projects } from "../types";
 import { ICreateProjectDTO, ICreateTaskDTO, IGhangeTaskDTO, UserAuthDTO, UserCreateDTO } from "../types/dto";
 
 type QueryContextType ={
     handleCreateAccount:(userInfo:UserCreateDTO)=>Promise<any>
     handleAutheticate:(user:UserAuthDTO)=>Promise<{token:string,user:User}>
     handleRecoveryUserInformation:(token:string)=>Promise<User>;
-    handleGetUserProjects:(authorId:string)=>Promise<Project[]>;
+    handleGetUserProjects:(userId:string)=>Promise<Projects>;
     handleCreateProject:(project:ICreateProjectDTO)=>Promise<void>;
     handleGetProjectTasks:(projectId:string)=>Promise<Task[]>;
     handleChangeTaskStatus:(changeData:IGhangeTaskDTO)=>Promise<Task>;
@@ -37,9 +37,7 @@ export function QueryContextProvider({children}:QueryContextProviderProps){
         if (res.status === 404) {
             throw new Error("User already Exists");
         }
-        
-        console.log(res.data);
-        
+                
         return {
             token:res.data.token,
             user:res.data.user
@@ -57,8 +55,8 @@ export function QueryContextProvider({children}:QueryContextProviderProps){
         return user
     }
 
-    const handleGetUserProjects = async (authorId:string)=>{
-        const res = await api.get(`/users/projects/${authorId}`);
+    const handleGetUserProjects = async (userId:string)=>{
+        const res = await api.get(`/usersProjects/projects/${userId}`);
         const projects = await res.data;        
 
         return projects;

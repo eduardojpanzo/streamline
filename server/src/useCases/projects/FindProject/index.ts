@@ -1,9 +1,9 @@
 import { ProjectsRepository } from "../../../repositories/Implementations/ProjectsRepository";
-import { FindProjectFromNameController } from "./FindProjectFromNameController";
-import { FindProjectFromNameUseCase } from "./FindProjectFromNameUseCase";
+import { FindProjectFromIdController } from "./FindProjectFromIdController";
+import { FindProjectFromIdUseCase} from "./FindProjectFromIdUseCase";
 
 const projectsRepository = new ProjectsRepository();
 
-const findProjectFromNameUseCase = new FindProjectFromNameUseCase(projectsRepository);
+const findProjectFromIdUseCase = new FindProjectFromIdUseCase(projectsRepository);
 
-export const findProjectFromNameController = new FindProjectFromNameController(findProjectFromNameUseCase)
+export const findProjectFromIdController = new FindProjectFromIdController(findProjectFromIdUseCase)

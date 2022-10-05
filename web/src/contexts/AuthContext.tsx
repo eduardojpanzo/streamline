@@ -13,7 +13,7 @@ type User = {
 type AuthContextType = {
     user:User | null
     isAuthenticated: boolean;
-    signIn:({email,password}:UserAuthDTO)=> Promise<any>;
+    signIn:(userInfo:UserAuthDTO)=> Promise<any>;
     logout:()=> void;
 }
 
@@ -37,7 +37,7 @@ export function AuthProvider({children}:{children:JSX.Element}) {
 
     const signIn = async({email,password}:UserAuthDTO) =>{
         const {token, user} = await handleAutheticate({email,password});
-
+        
         if (!token) {
             throw new Error("Not Existis user");
         }

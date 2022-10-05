@@ -58,6 +58,12 @@ export const CardProject = ({data}:{data:Project})=>{
   const handleOpenProject = ()=>{
 
   }
+
+  const HourFormat = new Intl.DateTimeFormat(
+    'pt-PT',
+    {month:'long',day:'2-digit'}
+  ).format(data.created_at);
+
   return(
     <ContainerCardProject onClick={handleOpenProject} color={data.color}>
       <header>
@@ -66,8 +72,11 @@ export const CardProject = ({data}:{data:Project})=>{
       <section>
         <p>{data.description}</p>
         <div>
-          <span></span>
-          <Link to={`/boardTask/${data.id}`}>Go to Tasks</Link>
+          <span>{HourFormat}</span>
+          <div className='links'>
+            <Link to={`/boardTask/${data.id}`}>Go to Tasks</Link>
+            <Link to={`/projects/${data.id}`}>View Project</Link>
+          </div>
         </div>
       </section>
     </ContainerCardProject>
