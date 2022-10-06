@@ -3,7 +3,9 @@ import ReactModal from 'react-modal'
 import { useAuth } from '../../hooks/useAuth';
 import { useHandleQuery } from '../../hooks/useHandleQueryUser';
 import {UserAuthDTO, UserCreateDTO } from '../../types/dto';
-import {FormControlStyled, SelectorColorStyled, SignInContainer, SignUpContainer } from './styles'
+import {FormControlStyled, LoaderContainer, SelectorColorStyled, SignInContainer, SignUpContainer } from './styles'
+
+import loader from '../../assets/loader.svg'
 
 interface SignFormProps{
     open:boolean;
@@ -180,5 +182,13 @@ export const SelectColor = ({handleChangeColor}:SelectColorProps)=>{
             <option value="#787878">Cinza</option>
         </select>
     </SelectorColorStyled>
+    )
+}
+
+export const Loader = ()=>{
+    return(
+        <LoaderContainer>
+            <img src={loader}alt="loader" />
+        </LoaderContainer>
     )
 }

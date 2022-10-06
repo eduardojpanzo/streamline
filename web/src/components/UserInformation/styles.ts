@@ -1,13 +1,6 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
-export const Container = styled.div`
-  background:#ecf1f0;
-  min-height: calc(100% - 80px);
-
-  padding:20px;
-`;
-
-export const  UserInformation = styled.div`
+export const  UserInformationContainer = styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -73,27 +66,5 @@ export const UserNumber = styled.div`
             background: var(--gray-100);
 
         }
-    }
-`
-
-export const Apresetetion = styled.div`
-    width: 480px;
-    height: 100%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction:column;
-
-    h1{
-        font-size:3rem;
-        color: var(--gray-700);
-        margin-bottom: 20px;
-    }
-
-    p{
-        font-size:1.2rem;
-        font-weight: 200;
-        line-height:1.5;
     }
 `

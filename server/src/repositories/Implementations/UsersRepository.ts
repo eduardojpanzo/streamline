@@ -5,8 +5,14 @@ import { User } from "../../model/User";
 import { ICreateUserDTO } from "../../types/dto";
 import { IUsersRepository } from "../IUsersRepository";
 import { Project } from "../../model/Project";
+import { UsersProjectsRepository } from "./UsersProjectsRepository";
+import { UsersTasksRepository } from "./UsersTasksRepository";
+import { UserInfo } from "../../types";
 
 export class UsersRepository implements IUsersRepository {
+    private usersProjectsRepository = new UsersProjectsRepository();
+    private usersTasksRepository = new UsersTasksRepository();
+
 
     async findById(id: string):Promise<User>{
         const user = await prismaClient.user.findFirst({
@@ -25,7 +31,7 @@ export class UsersRepository implements IUsersRepository {
     };
     
     async findByEmail(email: string):Promise<User>{
-         const user = await prismaClient.user.findFirst({
+        const user = await prismaClient.user.findFirst({
             where:{
                 email
             },
@@ -35,7 +41,7 @@ export class UsersRepository implements IUsersRepository {
                 avatarImg:true,
                 email:true
             }
-         })
+        })
 
          return user;
     };
@@ -60,14 +66,24 @@ export class UsersRepository implements IUsersRepository {
         return user
     };
 
-    async getUser(email: string):Promise<User>{
+    async getUser(email: string):Promise<UserInfo>{
         const user = await prismaClient.user.findFirst({
            where:{
                email
            }
         })
 
-        return user;
+        const projects = await this.usersProjectsRepository
+            .getUserProjects(user.id);
+        
+        const tasks = await this.usersTasksRepository
+            .getUserTasks(user.id);
+
+        return {
+            ...user,
+            projects,
+            tasks
+        };
    } ;
 
     async getUserProjects(authorId: string):Promise<Project[]>{

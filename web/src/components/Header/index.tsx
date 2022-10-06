@@ -5,17 +5,11 @@ import { CadastreForm, SignInForm } from '../FormElement';
 import { Container } from './styles';
 
 export function Header() {
-  const {user,logout} = useAuth()
+  const {user} = useAuth()
   const navigate = useNavigate()
 
   const [openSignIn, setOpenSignIn] = useState(false);
   const [openSignUp, setOpenSignUp] = useState(false);
-
-  function handleLogOut() {
-    logout();
-
-    navigate("/")
-  }
 
   const today = Date.now();
 
@@ -37,8 +31,8 @@ export function Header() {
               Cadastro
             </button>
           </div>):(
-            <button className={"signUp"} onClick={handleLogOut}>
-              Logout
+            <button className={"signUp"}>
+              {user.name}
             </button>
           )
         }

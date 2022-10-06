@@ -36,6 +36,8 @@ export class AuthenticateUserUseCase {
                 name:user.name,
                 email:user.email,
                 avatarImg:user.avatarImg,
+                projects: user.projects,
+                tasks: user.tasks
             }
         };
     }

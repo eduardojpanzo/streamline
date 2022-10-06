@@ -58,8 +58,19 @@ export const ContainerTask = styled.div`
             margin-top: 5px;
         }
     }
-    
 `;
+
+export const NewTaskHolder = styled.form`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap:10px;
+
+    label{
+        margin: 0;
+        padding: 0;
+    }
+`
 
 export const Label = styled.span`
     width: 10px;

@@ -11,7 +11,9 @@ import ProjectPage from "./pages/Project";
 export const RoutesComponent = () => {
     return ( 
         <Routes>
-              <Route path='/projects' element={<Outset/>}/>
+              <Route path='/' element={<Home/>}/>
+              {/* {<Route path='/projects' element={<Outset/>}/>} */}
+              <Route path="projects/:projectId" element={<ProjectPage/>}/>
               <Route path='/boardTask/:projectId' element={
                 <DndProvider backend={HTML5Backend}>
                   <BoardContextProvider>
@@ -19,8 +21,6 @@ export const RoutesComponent = () => {
                   </BoardContextProvider>
                 </DndProvider>
               }/>
-              <Route path="projects/:projectId" element={<ProjectPage/>}/>
-              <Route path='*' element={<Home/>}/>
         </Routes>
      );
 }

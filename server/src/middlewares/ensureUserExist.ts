@@ -2,11 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import { UsersRepository } from "../repositories/Implementations/UsersRepository";
 
  export async function ensureUserExist(request:Request,response:Response,next:NextFunction) {
-    const {id} = request.body;
+    const {email} = request.body;
 
     try {
         const usersRepository = new UsersRepository();
-        const accountExist = await usersRepository.findById(id)
+        const accountExist = await usersRepository.findByEmail(email)
 
         if (!accountExist) {
             throw new Error("Not Permitted, This user not exist");

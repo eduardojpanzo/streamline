@@ -2,8 +2,8 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { UserCard } from '../components/Card';
-import { FormControl } from '../components/FormElement';
+import { CardUser } from '../components/Card';
+import { FormControl, Loader } from '../components/FormElement';
 import { useAuth } from '../hooks/useAuth';
 import { api } from '../services/api';
 import {Container,DeleteProject,NewUser,UsersField} from '../styles/project'
@@ -38,31 +38,25 @@ function ProjectPage() {
         event.preventDefault();
 
         if (!userType) {
-            alert("Selecione a tipo de usuario a adicionar!")
+            toast.error('Selecione a tipo de usuario a adicionar!');
             return
         }
 
         if (user) {
             try {
-                const res = await api.post(`/usersProjects/${userType}`,{
+                await api.post(`/usersProjects/${userType}`,{
                     userId:user.id,
                     email,
                     projectId:projectInfo.project.id,
                 });
                     
-                toast.success('Adicionado com sucesso !', {
-                  position: toast.POSITION.TOP_RIGHT,
-                  delay:50
-                });
+                toast.success('Adicionado com sucesso !');
 
                 navigate(`/projects/${projectInfo.project.id}`);
 
                 setProjectInfo(data!);
             } catch (err) {
-                toast.error('Problemas ao adicionar !', {
-                    position: toast.POSITION.TOP_RIGHT,
-                    delay:50
-                });
+                toast.error('Não lhe é permitido adicionar');
             }
         }
     }
@@ -73,30 +67,25 @@ function ProjectPage() {
         if (user) {
 
             try {
-                const res = await api.delete(`/projects/delete`,{
+                await api.delete(`/projects/delete`,{
+                
                     data:{
                         userId: user.id,
                         projectId: projectInfo.project.id
                     }
                 });
 
-                toast.success('Projecto Eliminado !', {
-                    position: toast.POSITION.TOP_RIGHT,
-                    delay:50
-                });
+                toast.success('Projecto Eliminado !',);
                 navigate("/projects");
 
             } catch (err) {
-                toast.success(`${err}`, {
-                    position: toast.POSITION.TOP_RIGHT,
-                    delay:50
-                });
+                toast.error(`${err}`);
             }
         }
     }
 
     if (isFetching) {
-        return<>carregando....</>
+        return<Loader/>
     }
 
     return ( 
@@ -111,11 +100,11 @@ function ProjectPage() {
 
             <UsersField>
                 {projectInfo.users.admins.map(admin=>
-                    <UserCard data={admin} type="admin" key={admin.id}/>
+                    <CardUser data={admin} type="admin" key={admin.id}/>
                 )}
 
                 {projectInfo.users.members.map(member=>
-                    <UserCard data={member} type="member" key={member.id}/>
+                    <CardUser data={member} type="member" key={member.id}/>
                 )}
             </UsersField>
 

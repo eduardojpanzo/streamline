@@ -33,6 +33,16 @@ export type UserType = {
     avatarImg:string
 }
 
+export type UserInfo = {
+    id:string;
+    email: string;
+    name: string;
+    password?: string;
+    avatarImg: string;
+    projects:Projects,
+    tasks:Task[]
+}
+
 export type ProjectUsers = {
     admins:UserType[],
     members:UserType[]

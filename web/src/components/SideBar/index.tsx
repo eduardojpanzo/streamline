@@ -1,36 +1,39 @@
-import { MdHome, MdSettings } from 'react-icons/md';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { Container, Logo, MenuVertical, UserSection } from './styles';
+import { Container, Logo, UserSection } from './styles';
 import avatar from '../../assets/avatar.png'
+import { Link } from 'react-router-dom';
+import { useRef } from 'react';
 
 export const SideBar = () => {
-    const {user} = useAuth();
+    const {user,logout} = useAuth();
+    const MenuAvatarElement = useRef<HTMLUListElement>(null);
+
+
+    const handleLogout = ()=> {
+        logout();
+    }
+
+    const handleToggleShowMenu = ()=>{
+        MenuAvatarElement.current?.classList.toggle('flex');
+    }
 
   return (
     <Container>
-        <div>
-            <Logo>S</Logo>
-            <MenuVertical>
-                <ul>
-                    <li><Link to={`/`} className='active'><MdHome/> Inicial</Link></li>
-                    {user &&(
-                        <li><Link to={`/projects`}><MdSettings/> Projectos</Link></li>
-                    )}
-                    {/* {<li><Link to={`/settings`}>Setting</Link></li>} */}
-                </ul>
-            </MenuVertical>
-        </div>
+        <Logo>
+            <Link to={'/'}><h1>S</h1></Link>
+        </Logo>
 
         {user && (
         <UserSection>
-            <div className="avatar">
+            <div className="avatar" onClick={handleToggleShowMenu}>
                 <img
-                    src={user.avatar_img?user.avatar_img:avatar}
+                    src={user.avatarImg?user.avatarImg:avatar}
                     alt={user.name}
                 />
+                <ul ref={MenuAvatarElement}>
+                    <li onClick={handleLogout}>Logout</li>
+                </ul>
             </div>
-            <span>{user.name}</span>
         </UserSection>
         )}
     </Container>

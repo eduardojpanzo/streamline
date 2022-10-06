@@ -2,16 +2,10 @@ import { createContext, useEffect, useState } from "react";
 import { parseCookies, setCookie, destroyCookie} from "nookies";
 import { useHandleQuery } from "../hooks/useHandleQueryUser";
 import {UserAuthDTO} from '../types/dto';
-
-type User = {
-    id: string,
-    name:string,
-    email:string,
-    avatarImg:string,
-}
+import { UserInfo } from "../types";
 
 type AuthContextType = {
-    user:User | null
+    user:UserInfo | null
     isAuthenticated: boolean;
     signIn:(userInfo:UserAuthDTO)=> Promise<any>;
     logout:()=> void;
@@ -22,7 +16,7 @@ export const AuthContext = createContext({} as AuthContextType);
 export function AuthProvider({children}:{children:JSX.Element}) {
     const {handleRecoveryUserInformation,handleAutheticate} = useHandleQuery();
 
-    const [user, setUser] = useState<User | null>(null);    
+    const [user, setUser] = useState<UserInfo | null>(null);    
     const isAuthenticated = !!user;
 
     useEffect(()=>{

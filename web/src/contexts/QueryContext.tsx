@@ -1,13 +1,13 @@
 
 import { createContext, ReactNode } from "react"
 import { api } from "../services/api";
-import { Project, UserType,Task, Projects } from "../types";
+import { Project, UserType,Task, Projects, UserInfo } from "../types";
 import { ICreateProjectDTO, ICreateTaskDTO, IGhangeTaskDTO, UserAuthDTO, UserCreateDTO } from "../types/dto";
 
 type QueryContextType ={
     handleCreateAccount:(userInfo:UserCreateDTO)=>Promise<any>
-    handleAutheticate:(user:UserAuthDTO)=>Promise<{token:string,user:UserType}>
-    handleRecoveryUserInformation:(token:string)=>Promise<UserType>;
+    handleAutheticate:(user:UserAuthDTO)=>Promise<{token:string,user:UserInfo}>
+    handleRecoveryUserInformation:(token:string)=>Promise<UserInfo>;
     handleGetUserProjects:(userId:string)=>Promise<Projects>;
     handleCreateProject:(project:ICreateProjectDTO)=>Promise<void>;
     handleGetProjectTasks:(projectId:string)=>Promise<Task[]>;

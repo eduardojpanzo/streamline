@@ -43,7 +43,14 @@ export const List = ({tasks,done,creatable,title, list}:ListProps) => {
     if (user && projectId) {
       await handleCreateTask({...data,userId:user.id,projectId});
       
-      alert("Tarefa Criado!");
+      toast.success("Tarefa Criada com sucesso!",{
+        delay:5000
+      })
+
+      setInterval(()=>{
+        window.location.reload()
+      },5000)
+      
       setOpenModal(false);
     }
   }
@@ -71,8 +78,8 @@ export const List = ({tasks,done,creatable,title, list}:ListProps) => {
             taskId,
             userId: user.id
           })
-  
-          alert("Feito")
+
+          window.location.reload()
         })()
       }
     },
@@ -90,7 +97,7 @@ export const List = ({tasks,done,creatable,title, list}:ListProps) => {
       </header>
       <ul>
         {tasks.map((task,index)=>
-          <CardTask list={list} index={index} key={task.id} data={task}/>
+          <CardTask list={list} index={index} key={task.id} task={task}/>
         )}
       </ul>
 

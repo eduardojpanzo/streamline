@@ -1,4 +1,5 @@
 import { useBoard } from '../../hooks/useBoard';
+import { Loader } from '../FormElement';
 import { List } from '../List';
 
 import { Container } from './styles';
@@ -8,11 +9,7 @@ export const Board = () => {
   const {data, isFetching} = useBoard();
 
   if (isFetching) {
-    return(
-        <>
-            Carreggando.....
-        </>
-    )
+    return<Loader/>
   }
 
   if (data) {
