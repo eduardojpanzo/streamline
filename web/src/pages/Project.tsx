@@ -112,18 +112,15 @@ function ProjectPage() {
                 <NewUser onSubmit={handleAddNewUserInProject}>
                     <p>Novo Usuário</p>
                     <fieldset>
-                        <FormControl
-                            name='type'
-                            type='radio'
-                            value='admin'
-                            handleChange={handleSetUserType}
-                        >Administrador</FormControl>
-                        <FormControl
-                            name='type'
-                            type='radio'
-                            value='member'
-                            handleChange={handleSetUserType}
-                        >Membro</FormControl>
+                       
+                        <label htmlFor="">Administrador
+                            <input type="radio" name='type' value='admin' />
+                        </label>
+
+                        <label htmlFor="">Membro
+                            <input type="radio" name='type' value='member' />
+                        </label>
+                        
                     </fieldset>
 
                     <FormControl

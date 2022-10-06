@@ -1,16 +1,18 @@
 import { useAuth } from '../../hooks/useAuth';
 import { Container, Logo, UserSection } from './styles';
 import avatar from '../../assets/avatar.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 
 export const SideBar = () => {
+    const navigate = useNavigate()
     const {user,logout} = useAuth();
     const MenuAvatarElement = useRef<HTMLUListElement>(null);
 
 
     const handleLogout = ()=> {
         logout();
+        navigate('/')
     }
 
     const handleToggleShowMenu = ()=>{
